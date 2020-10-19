@@ -141,7 +141,7 @@ class Articles extends React.Component {
                         {articles.map(article =>
                             <Col key={article.id} lg="3" md="6" sm="12">
                               <Card>
-                                <CardImg top width="100%" src={article.image_url} alt="Card image cap"  onClick={() => this.goToDetail(article)}/>
+                                <CardImg width="100%" src={article.image_url} alt="Card image cap"  onClick={() => this.goToDetail(article)}/>
                                 <CardBody>
                                   <CardTitle className="list-group-heading">{article.title ?? "Title is Missing"}</CardTitle>
                                   {/*<CardSubtitle>{article.description ?? ""}</CardSubtitle>*/}

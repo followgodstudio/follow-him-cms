@@ -16,6 +16,7 @@ import {compose} from "recompose";
 import {withRouter} from "react-router-dom";
 import withAuthorization from "../../../components/Session/withAuthorization";
 import * as ROUTES from "../../../routes";
+import {Image} from "react-bootstrap";
 
 const INITIAL_STATE = {
   inputTitle:"",
@@ -88,6 +89,10 @@ class ArticleDetail extends React.Component {
     return article;
   }
 
+  goToEditDetail(articleId){
+    this.props.history.push('/admin' + `/article-edit/${articleId}`);
+  }
+
   render() {
     const { article, loading } = this.state;
     console.log("article In:", article);
@@ -106,148 +111,37 @@ class ArticleDetail extends React.Component {
                         <CardHeader className="border-0">
                           <Row className="d-flex justify-content-center">
                             <div style={{ marginLeft: "auto" }} >
-                              <Button className="btn-primary" onClick={e => e.preventDefault()}> Edit </Button>
+                              <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
                               <Button className="btn-danger" onClick={e => e.preventDefault()}> Delete </Button>
                               <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
                             </div>
-                            { loading && <div> Loading .. </div>}
-                            { !loading &&
-                            <div>
-                              <div>
-                                <h2 className="mb-2">{article.title}</h2>
-                              </div>
-                              {article.content.map(paragraph =>
-                                  <div key = {paragraph.index}>
-                                    <h4> {paragraph.subtitle} </h4>
-                                    <p> {paragraph.body} </p>
-                                  </div>
-                              )}
-
-                            </div>}
-
-
-                            {/*{loading && (*/}
-                            {/*    <div style={{ color: `green` }}>*/}
-                            {/*      loading book detail for book ID: <strong>{articleId}</strong>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*{error && (*/}
-                            {/*    <div style={{ color: `red` }}>*/}
-                            {/*      {error.toString()}*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*{article ? article.title : "article.id"}*/}
-
-                            {/*<p>*/}
-
-                            {/*</p>*/}
-                            {/*<p>*/}
-
-                            {/*</p>*/}
-                            {/*<p>*/}
-
-                            {/*</p>*/}
-                            {/*<Button style={{ marginLeft: "auto" }} className="btn-success" onClick={this.goToDetail}> +Add article</Button>*/}
                           </Row>
                         </CardHeader>
                         <CardBody>
-                          {/*{console.log(this.state.articles)}*/}
-                          {/*<Row className=" icon-examples">*/}
-                          {/*  {this.state.articles.map(article =>*/}
-                          {/*      <Col key={article.id} lg="3" md="6" sm="12">*/}
-                          {/*        <Card onClick={() => this.goToDetail(article)}>*/}
-                          {/*          <CardImg top width="100%" src={article.image_url} alt="Card image cap" />*/}
-                          {/*          <CardBody>*/}
-                          {/*            <CardTitle className="list-group-heading">{article.title ?? "Title is Missing"}</CardTitle>*/}
-                          {/*            /!*<CardSubtitle>{article.description ?? ""}</CardSubtitle>*!/*/}
-                          {/*            <CardText className="text-sm">{article.description ?? ""}</CardText>*/}
-                          {/*            <Button className="btn-primary" onClick={e => e.preventDefault()}>Edit</Button>*/}
-                          {/*            <Button className="btn-outline-danger" onClick={e => e.preventDefault()}>Delete</Button>*/}
-                          {/*          </CardBody>*/}
-                          {/*        </Card>*/}
-                          {/*      </Col>*/}
-                          {/*  )}*/}
-
-                          {/*  /!*<Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*</Row>*!/*/}
-                          {/*  /!*<Row className=" icon-examples">*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>{authUser.displayName}</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Edit</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*  /!*  <Col lg="3" md="6" sm="12">*!/*/}
-                          {/*  /!*    <Card>*!/*/}
-                          {/*  /!*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*!/*/}
-                          {/*  /!*      <CardBody>*!/*/}
-                          {/*  /!*        <CardTitle>Card title</CardTitle>*!/*/}
-                          {/*  /!*        <CardSubtitle>Card subtitle</CardSubtitle>*!/*/}
-                          {/*  /!*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*!/*/}
-                          {/*  /!*        <Button>Button</Button>*!/*/}
-                          {/*  /!*      </CardBody>*!/*/}
-                          {/*  /!*    </Card>*!/*/}
-                          {/*  /!*  </Col>*!/*/}
-                          {/*</Row>*/}
+                          { loading && <div> Loading .. </div>}
+                          { !loading &&
+                          <div>
+                            <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" />
+                            <br />
+                            <h1 className="mb-2">标题：{article.title}</h1>
+                            <h3 className="mb-2">文章简介：{article.description}</h3>
+                            <Col>
+                            <Row>
+                              <p className="mb-2">作者：
+                                <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle />
+                                {article.author_name}
+                              </p>
+                            </Row>
+                            </Col>
+                            {/*<img src={article.icon} />*/}
+                            {article.content.map(paragraph =>
+                                <div key = {paragraph.index}>
+                                  <h4> {paragraph.subtitle} </h4>
+                                  <p> {paragraph.body} </p>
+                                  <hr />
+                                </div>
+                            )}
+                          </div>}
                         </CardBody>
                         <CardFooter className="py-4">
 

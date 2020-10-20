@@ -100,43 +100,44 @@ class ArticleAdd extends React.Component {
     //   alert(" Please sign in.");
     //   return;
     // }
-    let title = this.state.title;
-    let description = this.state.description;
-    let image_url = this.state.image_url;
-    let author_name = this.state.author_name;
-    let author_icon = this.state.author_icon;
 
     if(!this.validateArticle()){
       return;
     }
 
-    let user = await this.props.firebase.fetchCurrentUserProfile();
-
     let data = {
-      title: title,
-      description: description,
+      title: this.state.inputTitle,
+      description: this.state.inputDescription,
       author_uid: this.props.firebase.auth.currentUser.uid,
+      author_name: this.state.inputAuthorName,
+      icon: this.state.inputAuthorIcon,
       created_date: firebase.firestore.Timestamp.now(),
       verified: false
     };
 
-    if (user["name"].trim() !== "") {
+    // Author User data
+    let user = await this.props.firebase.fetchCurrentUserProfile();
+    if (!data.author_name && user["name"].trim() !== "") {
       data.author_name = user["name"];
     }
     // else {
     //   if (author_name_global)
     //     data.author_name = author_name_global;
     // }
-    if (user["icon"].trim() !== "") {
+    if (data.icon && user["icon"].trim() !== "") {
       data.icon = user["icon"];
+    } else {
+      data.icon = "";
     }
     // else {
     //   if (author_icon_global)
     //     data.icon = author_icon_global;
     // }
-    if (image_url.trim() !== "") {
-      data.image_url = image_url;
+    if (!this.state.inputImageUrl == undefined && this.state.inputImageUrl.trim() !== "") {
+      data.image_url = this.state.inputImageUrl;
     }
+
+
     // console.log(data);
     console.log("content", this.state.content);
     e.persist();
@@ -167,7 +168,6 @@ class ArticleAdd extends React.Component {
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state);
   };
 
   addParagraph =() =>{
@@ -212,7 +212,7 @@ class ArticleAdd extends React.Component {
                         <CardHeader className="border-0">
                           <Row className="d-flex justify-content-center">
                             <div style={{ marginRight: "auto" }} >
-                              <Button className="btn-primary" onClick={e => e.preventDefault()}> Back </Button>
+                              <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
                             </div>
                           </Row>
                         </CardHeader>
@@ -394,4 +394,4 @@ export default compose(
 //               type="submit">Submit
 //       </button>
 //   </form>
-// </main>
+// </main>image_url

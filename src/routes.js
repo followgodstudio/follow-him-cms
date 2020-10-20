@@ -26,6 +26,7 @@ import Articles from "./views/partials/Articles/Articles";
 import PasswordForget from "./views/partials/PasswordForget";
 import ArticleDetail from "./views/partials/Articles/ArticleDetail";
 import ArticleAdd from "./views/partials/Articles/ArticleAdd";
+import ArticleEdit from "./views/partials/Articles/ArticleEdit";
 
 export const LANDING = '/';
 export const REGISTER = '/register';
@@ -36,6 +37,7 @@ export const USERPROFILE = '/user-profile';
 export const PASSWORDFORGET = '/password-forget';
 export const ARTICLE_DETAIL = '/article/:articleId';
 export const ARTICLE_ADD = '/article-add';
+export const ARTICLE_EDIT = '/article-edit/:articleId';
 
 
 const routes = [
@@ -65,6 +67,13 @@ const routes = [
     name: "AddArticle",
     icon: "ni ni-tv-2 text-primary",
     component: ArticleAdd,
+    layout: "/admin"
+  },
+  {
+    path: ARTICLE_EDIT,
+    name: "EditArticle",
+    icon: "ni ni-tv-2 text-primary",
+    component: ArticleEdit,
     layout: "/admin"
   },
   {

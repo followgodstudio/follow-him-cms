@@ -103,6 +103,10 @@ class Articles extends React.Component {
     this.props.history.push('/admin' + `/article/${article.id}`);
   }
 
+  goToEditDetail(article){
+    this.props.history.push('/admin' + `/article-edit/${article.id}`);
+  }
+
   deleteArticle=(article)=>{
     let articles = this.state.articles;
     let filtered = articles.filter(function(e, index, arr){ return e.id != article.id;});
@@ -139,99 +143,20 @@ class Articles extends React.Component {
                     <CardBody>
                       <Row className=" icon-examples">
                         {articles.map(article =>
-                            <Col key={article.id} lg="3" md="6" sm="12">
+                            <Col key={article.id} lg="3" sm="6">
                               <Card>
-                                <CardImg width="100%" src={article.image_url} alt="Card image cap"  onClick={() => this.goToDetail(article)}/>
+                                <div>
+                                 <img style={{ objectFit: "cover" }} height="300px" width="100%" src={article.image_url} alt="Card image cap"  onClick={() => this.goToDetail(article)}/>
+                                </div>
                                 <CardBody>
                                   <CardTitle className="list-group-heading">{article.title ?? "Title is Missing"}</CardTitle>
-                                  {/*<CardSubtitle>{article.description ?? ""}</CardSubtitle>*/}
-                                  <CardText className="text-sm">{article.description ?? ""}</CardText>
-                                  <Button className="btn-primary" onClick={e => e.preventDefault()}>Edit</Button>
+                                  <CardText className="text-sm" style={{lineClamp: 3}}>{article.description ?? ""}</CardText>
+                                  <Button className="btn-primary" onClick={() => this.goToEditDetail(article)}>Edit</Button>
                                   <Button className="btn-outline-danger" onClick={() => this.deleteArticle(article)}>Delete</Button>
                                 </CardBody>
                               </Card>
                             </Col>
                         )}
-
-                        {/*<Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*</Row>*/}
-                      {/*<Row className=" icon-examples">*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>{authUser.displayName}</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Edit</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button onClick={this.fetchArticlesByAuthUser(authUser)}>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
-                      {/*  <Col lg="3" md="6" sm="12">*/}
-                      {/*    <Card>*/}
-                      {/*      <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />*/}
-                      {/*      <CardBody>*/}
-                      {/*        <CardTitle>Card title</CardTitle>*/}
-                      {/*        <CardSubtitle>Card subtitle</CardSubtitle>*/}
-                      {/*        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
-                      {/*        <Button>Button</Button>*/}
-                      {/*      </CardBody>*/}
-                      {/*    </Card>*/}
-                      {/*  </Col>*/}
                       </Row>
                     </CardBody>
                     <CardFooter className="py-4">

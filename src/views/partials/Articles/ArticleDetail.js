@@ -119,14 +119,16 @@ class ArticleDetail extends React.Component {
                     <div className="col">
                       <Card className="shadow">
                         <CardHeader className="border-0">
-                          <Row style={{margin : 20}} className="d-flex justify-content-center">
-                            <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
-                            <div style={{ marginLeft: "auto" }} >
-                              <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
-                              <Button className="btn-danger" onClick={this.deleteArticle}> Delete </Button>
-                              <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
-                            </div>
-                          </Row>
+                          <Col>
+                            <Row className="d-flex justify-content-center">
+                              <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
+                              <div style={{ marginLeft: "auto" }} >
+                                <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
+                                <Button className="btn-danger" onClick={this.deleteArticle}> Delete </Button>
+                                <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
+                              </div>
+                            </Row>
+                          </Col>
                         </CardHeader>
                         <CardBody>
                           { loading && <div> Loading .. </div>}

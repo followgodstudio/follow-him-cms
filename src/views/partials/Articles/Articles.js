@@ -135,10 +135,12 @@ class Articles extends React.Component {
                 <div className="col">
                   <Card className="shadow">
                     <CardHeader className="border-0">
-                      <Row style={{ display: "flex" }}>
-                        <h3 className="mb-0">Your Articles</h3>
-                        <Button style={{ marginLeft: "auto" }} className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
-                      </Row>
+                      <Col>
+                        <Row style={{ display: "flex" }}>
+                          <h3 className="mb-0">Your Articles</h3>
+                          <Button style={{ marginLeft: "auto" }} className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
+                        </Row>
+                      </Col>
                     </CardHeader>
                     <CardBody>
                       <Row className=" icon-examples">

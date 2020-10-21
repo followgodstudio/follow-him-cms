@@ -89,6 +89,16 @@ class ArticleDetail extends React.Component {
     return article;
   }
 
+  deleteArticle = e => {
+    this.props.firebase.db.collection("articles").doc(this.state.articleId).delete().then(function() {
+      alert("Document successfully deleted!");
+    }).catch(function(error) {
+      alert("Error removing document: " + error);
+    });
+    this.props.history.goBack();
+    e.preventDefault();
+  }
+
   goToEditDetail(articleId){
     this.props.history.push('/admin' + `/article-edit/${articleId}`);
   }
@@ -109,10 +119,11 @@ class ArticleDetail extends React.Component {
                     <div className="col">
                       <Card className="shadow">
                         <CardHeader className="border-0">
-                          <Row className="d-flex justify-content-center">
+                          <Row style={{margin : 20}} className="d-flex justify-content-center">
+                            <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
                             <div style={{ marginLeft: "auto" }} >
                               <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
-                              <Button className="btn-danger" onClick={e => e.preventDefault()}> Delete </Button>
+                              <Button className="btn-danger" onClick={this.deleteArticle}> Delete </Button>
                               <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
                             </div>
                           </Row>
@@ -120,28 +131,35 @@ class ArticleDetail extends React.Component {
                         <CardBody>
                           { loading && <div> Loading .. </div>}
                           { !loading &&
-                          <div>
+                          <Container>
                             <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" />
+                            <hr />
+                            <div>
+                              <h1 className="mb-2">标题：{article.title}</h1>
+                              <br />
+                              <h3 className="mb-2">文章简介：{article.description}</h3>
+                              <Col>
+                              <Row>
+                                <p className="mb-2">作者：
+                                  {article.icon ? <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle /> : null }
+                                  <span style={{marginRight: 20}} />
+                                  {article.author_name}
+                                </p>
+                              </Row>
+                              </Col>
+                            </div>
                             <br />
-                            <h1 className="mb-2">标题：{article.title}</h1>
-                            <h3 className="mb-2">文章简介：{article.description}</h3>
-                            <Col>
-                            <Row>
-                              <p className="mb-2">作者：
-                                <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle />
-                                {article.author_name}
-                              </p>
-                            </Row>
-                            </Col>
-                            {/*<img src={article.icon} />*/}
-                            {article.content.map(paragraph =>
-                                <div key = {paragraph.index}>
-                                  <h4> {paragraph.subtitle} </h4>
-                                  <p> {paragraph.body} </p>
-                                  <hr />
-                                </div>
-                            )}
-                          </div>}
+                            <div>
+                              <h3>正文:</h3>
+                              {article.content.map(paragraph =>
+                                  <div key = {paragraph.index}>
+                                    <h4> {paragraph.subtitle} </h4>
+                                    <p> {paragraph.body} </p>
+                                    <hr />
+                                  </div>
+                              )}
+                            </div>
+                          </Container>}
                         </CardBody>
                         <CardFooter className="py-4">
 

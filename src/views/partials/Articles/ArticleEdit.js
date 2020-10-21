@@ -60,7 +60,7 @@ class ArticleEdit extends React.Component {
   }
 
   fetchArticleContentById = async (articleId) => {
-    alert(articleId);
+    // alert(articleId);
     let content = [];
     let article;
     let docRef = this.props.firebase.articles().doc(articleId);

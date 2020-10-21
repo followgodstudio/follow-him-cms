@@ -133,10 +133,9 @@ class ArticleAdd extends React.Component {
     //   if (author_icon_global)
     //     data.icon = author_icon_global;
     // }
-    if (!this.state.inputImageUrl == undefined && this.state.inputImageUrl.trim() !== "") {
+    if (this.state.inputImageUrl && this.state.inputImageUrl.trim()) {
       data.image_url = this.state.inputImageUrl;
     }
-
 
     // console.log(data);
     console.log("content", this.state.content);

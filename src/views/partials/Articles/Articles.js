@@ -146,11 +146,11 @@ class Articles extends React.Component {
                             <Col key={article.id} lg="3" sm="6">
                               <Card>
                                 <div>
-                                 <img style={{ objectFit: "cover" }} height="300px" width="100%" src={article.image_url} alt="Card image cap"  onClick={() => this.goToDetail(article)}/>
+                                {article.image_url ? <img style={{ objectFit: "cover" }} height="300px" width="100%" src={article.image_url} alt="Card image cap" onClick={() => this.goToDetail(article)} /> : null}
                                 </div>
                                 <CardBody>
-                                  <CardTitle className="list-group-heading">{article.title ?? "Title is Missing"}</CardTitle>
-                                  <CardText className="text-sm" style={{lineClamp: 3}}>{article.description ?? ""}</CardText>
+                                  <CardTitle className="list-group-heading" onClick={() => this.goToDetail(article)} >{article.title ?? "Title is Missing"}</CardTitle>
+                                  <CardText className="text-sm" style={{lineClamp: 3}} onClick={() => this.goToDetail(article)} >{article.description ?? ""}</CardText>
                                   <Button className="btn-primary" onClick={() => this.goToEditDetail(article)}>Edit</Button>
                                   <Button className="btn-outline-danger" onClick={() => this.deleteArticle(article)}>Delete</Button>
                                 </CardBody>

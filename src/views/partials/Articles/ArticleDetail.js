@@ -121,7 +121,7 @@ class ArticleDetail extends React.Component {
                           { loading && <div> Loading .. </div>}
                           { !loading &&
                           <div>
-                            <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" />
+                            {article.image_url ? <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" /> : null}
                             <br />
                             <h1 className="mb-2">标题：{article.title}</h1>
                             <h3 className="mb-2">文章简介：{article.description}</h3>

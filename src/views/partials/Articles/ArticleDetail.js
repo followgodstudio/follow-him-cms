@@ -128,7 +128,8 @@ class ArticleDetail extends React.Component {
                             <Col>
                             <Row>
                               <p className="mb-2">作者：
-                                <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle />
+                                {article.icon ? <Image style={{ objectFit: "cover" }} height="35" width="35" src={article.icon} roundedCircle /> : null}
+                                <span style={{marginRight: 15}} />
                                 {article.author_name}
                               </p>
                             </Row>

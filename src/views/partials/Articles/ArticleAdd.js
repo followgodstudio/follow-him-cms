@@ -96,10 +96,6 @@ class ArticleAdd extends React.Component {
 
   submitArticle = async e => {
     const {numParagraph} = this.state;
-    // if (!author_id_global) {
-    //   alert(" Please sign in.");
-    //   return;
-    // }
 
     if(!this.validateArticle()){
       return;
@@ -133,7 +129,7 @@ class ArticleAdd extends React.Component {
     //   if (author_icon_global)
     //     data.icon = author_icon_global;
     // }
-    if (!this.state.inputImageUrl == undefined && this.state.inputImageUrl.trim() !== "") {
+    if (this.state.inputImageUrl && this.state.inputImageUrl.trim()) {
       data.image_url = this.state.inputImageUrl;
     }
 

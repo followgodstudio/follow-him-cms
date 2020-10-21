@@ -96,10 +96,6 @@ class ArticleAdd extends React.Component {
 
   submitArticle = async e => {
     const {numParagraph} = this.state;
-    // if (!author_id_global) {
-    //   alert(" Please sign in.");
-    //   return;
-    // }
 
     if(!this.validateArticle()){
       return;

@@ -55,12 +55,11 @@ class ArticleEdit extends React.Component {
         loading: false,
         numParagraph: doc.content.length
       });
-      console.log("articleResult: ", this.state.article);
+      // console.log("articleResult: ", this.state.article);
     });
   }
 
   fetchArticleContentById = async (articleId) => {
-    // alert(articleId);
     let content = [];
     let article;
     let docRef = this.props.firebase.articles().doc(articleId);
@@ -81,10 +80,13 @@ class ArticleEdit extends React.Component {
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(doc => {
-        console.log("content id: ", doc.id);
         content.push(doc.data());
       });
     });
+
+    content.sort((a, b) => (a.index > b.index) ? 1 : -1);
+
+    // console.log(content);
 
     this.setState({content:content});
 
@@ -94,11 +96,11 @@ class ArticleEdit extends React.Component {
 
   validateArticle =() => {
     let content=[];
-    console.log("validate content paragraph:", this.state.numParagraph);
+    // console.log("validate content paragraph:", this.state.numParagraph);
     for (let i = 1; i <= this.state.numParagraph; i++) {
       // console.log("state ", this.state);
-      console.log("state ", this.state.article.content);
-      console.log("loading param: ", i);
+      // console.log("state ", this.state.article.content);
+      // console.log("loading param: ", i);
       let body = "";
       let subtitle = "";
       if(this.state["inputParagraph" + i] == null){
@@ -109,19 +111,13 @@ class ArticleEdit extends React.Component {
       }
 
       if (this.state["inputSubtitle" + i] == null) {
-        console.log("isNull");
         subtitle = this.state.article.content[i - 1].subtitle;
       } else {
-        console.log("Not Null");
         subtitle = this.state["inputSubtitle" + i].trim();
       }
 
-      console.log("current Subtitle: " + subtitle);
-
       if (body){
-        // content[i] = {index: i - 1, subtitle: subtitle, body: body};
         content.push({index: i - 1, subtitle: subtitle, body: body});
-        console.log("pushed param: ", i);
       }
     }
 
@@ -158,17 +154,14 @@ class ArticleEdit extends React.Component {
     }
 
     if (this.state.inputImageUrl && this.state.inputImageUrl.trim()) {
-      console.log("image url:", this.state.inputImageUrl);
       data.image_url = this.state.inputImageUrl;
     }
 
-    console.log("content", this.state.content);
     e.persist();
     await this.updateArticleInFirebase(data, this.state.content);
   }
 
   async updateArticleInFirebase(data, content) {
-    console.log("data:", data);
     console.log("final content:", content);
     try {
       let db = this.props.firebase.db;
@@ -176,39 +169,16 @@ class ArticleEdit extends React.Component {
         ...data
       });
 
-      // let docRef2 = await db.collection("articles").doc(this.state.articleId).collection('content').update({
-      //   ...content
-      // });
-
       await db.collection("articles").doc(this.state.articleId).collection('content').get().then(res => {
-        console.log("res:",res);
         res.forEach(e => {
-          console.log("e:",e);
           e.ref.delete();
         });
-      })
-
-      // let contentRef = db.collection("articles").doc(this.state.articleId).collection('content')
-      // await contentRef.add({...content});
+      });
 
       await content.forEach((doc) => {
         db.collection("articles").doc(this.state.articleId).collection('content').add({...doc});
       });
 
-      // let batch = db.batch();
-      // content.forEach((doc) => {
-      //   console.log("content doc:", doc);
-      //   batch.set(db.collection("articles").doc(this.state.articleId).collection('content').doc(), doc);
-      // });
-      // await batch.commit();
-
-      // console.log("update result", docRef);
-
-      // let batch = db.batch();
-      // content.forEach((doc) => {
-      //   batch.update(db.collection("articles").doc(this.state.articleId).collection('content').doc(doc.id), doc);
-      // });
-      // await batch.commit();
       alert("Article Updated!");
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
@@ -248,13 +218,9 @@ class ArticleEdit extends React.Component {
   render() {
     const { article, loading } = this.state;
     const numParagraph  = this.state.article.content ? this.state.article.content.length : 0;
-    console.log("numParagraph", numParagraph);
+    // console.log("numParagraph", numParagraph);
     console.log("this.state.content", this.state.content);
     const paragraph = [];
-    //
-    // for (let i=0; i<numParagraph; i+=1) {
-    //   paragraph.push(<Paragraph key={i} numParagraph={i+1} content={this.state.content} onChange={this.onChange} />);
-    // }
 
     return (
         <>

@@ -58,7 +58,7 @@ class ArticleDetail extends React.Component {
         article: doc,
         loading: false
       });
-      console.log("articleResult: ", this.state.article);
+      // console.log("articleResult: ", this.state.article);
     });
   }
 
@@ -85,6 +85,8 @@ class ArticleDetail extends React.Component {
       console.log("Error getting document:", error);
     });
 
+    content.sort((a, b) => (a.index > b.index) ? 1 : -1);
+
     article.content = content;
     return article;
   }
@@ -105,7 +107,6 @@ class ArticleDetail extends React.Component {
 
   render() {
     const { article, loading } = this.state;
-    console.log("article In:", article);
 
     return (
         <>
@@ -134,7 +135,7 @@ class ArticleDetail extends React.Component {
                           { loading && <div> Loading .. </div>}
                           { !loading &&
                           <Container>
-                            <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" />
+                            {article.image_url ? <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" /> : null}
                             <hr />
                             <div>
                               <h1 className="mb-2">标题：{article.title}</h1>
@@ -173,32 +174,6 @@ class ArticleDetail extends React.Component {
             )}
           </AuthUserContext.Consumer>
         </>
-        // <div>
-        //   <h2>User ({this.props.match.params.id})</h2>
-        //   {loading && <div>Loading ...</div>}
-        //
-        //   {user && (
-        //       <div>
-        //     <span>
-        //       <strong>ID:</strong> {user.uid}
-        //     </span>
-        //         <span>
-        //       <strong>E-Mail:</strong> {user.email}
-        //     </span>
-        //         <span>
-        //       <strong>Username:</strong> {user.username}
-        //     </span>
-        //         <span>
-        //       <button
-        //           type="button"
-        //           onClick={this.onSendPasswordResetEmail}
-        //       >
-        //         Send Password Reset
-        //       </button>
-        //     </span>
-        //       </div>
-        //   )}
-        // </div>
     );
   }
 }

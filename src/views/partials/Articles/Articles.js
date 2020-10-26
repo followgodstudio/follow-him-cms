@@ -60,7 +60,7 @@ import { withRouter } from "react-router-dom";
 class Articles extends React.Component {
   constructor(props){
     super(props);
-    this.state = { loading: true, articles:[], };
+    this.state = { loading: true, articles:[], articlePerPage: 8};
   }
 
   componentDidMount() {
@@ -75,6 +75,25 @@ class Articles extends React.Component {
   }
 
   fetchArticlesByAuthUser = async (authUser) => {
+    let articleList = [];
+    await this.props.firebase.db.collection("articles").where("author_uid",
+        "==", authUser.uid).orderBy("created_date", "desc")
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        let article = doc.data();
+        article.id = doc.id;
+        articleList.push(article);
+      });
+      // console.log("articles:   " + articleList);
+    })
+    .catch(function (error) {
+      console.log("Error getting documents: ", error);
+    });
+    return articleList;
+  }
+
+  fetchArticlesByAuthUserAndPageNum = async (authUser, pageNum) => {
     let articleList = [];
     await this.props.firebase.db.collection("articles").where("author_uid",
         "==", authUser.uid).orderBy("created_date", "desc")

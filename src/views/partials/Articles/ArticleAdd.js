@@ -23,6 +23,10 @@ import {withRouter} from "react-router-dom";
 import withAuthorization from "../../../components/Session/withAuthorization";
 import firebase from 'firebase';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState } from 'draft-js';
+
 
 const INITIAL_STATE = {
   author_id_global: '',
@@ -40,7 +44,7 @@ const INITIAL_STATE = {
 class ArticleAdd extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE, editorState: EditorState.createEmpty(), };
     // this.addParagraph = this.addParagraph.bind(this);
   }
 
@@ -77,6 +81,13 @@ class ArticleAdd extends React.Component {
   //   }, false);
   // }
   //
+  onEditorStateChange=(editorState) => {
+    this.setState({
+      editorState,
+    });
+  };
+
+
   validateArticle =() => {
     let content=[];
     for (let i = 1; i <= this.state.numParagraph; i++) {
@@ -185,7 +196,7 @@ class ArticleAdd extends React.Component {
 
 
   render() {
-    const { numParagraph } = this.state;
+    const { numParagraph, editorState } = this.state;
     console.log("numParagraph", numParagraph);
     const paragraph = [];
     //
@@ -271,6 +282,14 @@ class ArticleAdd extends React.Component {
                                   {paragraph}
                                 </ul>
                               </div>
+
+                              <Editor
+                                  editorState={editorState}
+                                  toolbarClassName="toolbarClassName"
+                                  wrapperClassName="wrapperClassName"
+                                  editorClassName="editorClassName"
+                                  onEditorStateChange={this.onEditorStateChange}
+                              />
 
                               <hr className="mb-4" />
                                 <Button className="btn-info btn-lg btn-block" type="submit"> Submit </Button>

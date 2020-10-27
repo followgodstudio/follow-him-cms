@@ -25,7 +25,11 @@ import firebase from 'firebase';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import PropTypes from 'prop-types';
+import { BlockPicker } from 'react-color';
+import  ColorPic  from '../../../components/Utilities/ColorPic/ColorPic';
 
 
 const INITIAL_STATE = {
@@ -81,9 +85,9 @@ class ArticleAdd extends React.Component {
   //   }, false);
   // }
   //
-  onEditorStateChange=(editorState) => {
+  onEditorStateChange: Function = (editorState) => {
     this.setState({
-      editorState,
+      editorState: editorState,
     });
   };
 
@@ -107,6 +111,7 @@ class ArticleAdd extends React.Component {
 
   submitArticle = async e => {
     const {numParagraph} = this.state;
+    // console.log("editorState：" , draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())));
 
     if(!this.validateArticle()){
       return;
@@ -152,7 +157,7 @@ class ArticleAdd extends React.Component {
 
   //
   async addArticleInFirebase(data, content) {
-    console.log("data:", data);
+    console.log("state:", this);
     try {
       let db = this.props.firebase.db;
       let docRef = await db.collection("articles").add(data);
@@ -289,8 +294,12 @@ class ArticleAdd extends React.Component {
                                   wrapperClassName="wrapperClassName"
                                   editorClassName="editorClassName"
                                   onEditorStateChange={this.onEditorStateChange}
+                                  toolbar={{colorPicker: { component: ColorPic },}}
                               />
-
+                              {/*<textarea*/}
+                              {/*    disabled*/}
+                              {/*    value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}*/}
+                              {/*/>*/}
                               <hr className="mb-4" />
                                 <Button className="btn-info btn-lg btn-block" type="submit"> Submit </Button>
                             </AvForm>

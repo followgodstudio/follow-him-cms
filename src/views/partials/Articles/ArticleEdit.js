@@ -23,6 +23,12 @@ import {withRouter} from "react-router-dom";
 import withAuthorization from "../../../components/Session/withAuthorization";
 import firebase from 'firebase';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback, AvRadioGroup, AvRadio, AvCheckboxGroup, AvCheckbox } from 'availity-reactstrap-validation';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, ContentState, convertFromRaw, convertToRaw, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import ColorPic from "../../../components/Utilities/ColorPic/ColorPic";
+import htmlToDraft from 'html-to-draftjs';
 
 const INITIAL_STATE = {
   numParagraph: 1,
@@ -42,14 +48,15 @@ class ArticleEdit extends React.Component {
       content:[],
       error: null,
       loading: true,
-      articleId : props.match.params.articleId
+      articleId : props.match.params.articleId,
+      content_html: EditorState.createEmpty(),
     };
   }
 
   componentDidMount() {
     this.setState({ loading: true });
     this.fetchArticleContentById(this.state.articleId).then(doc => {
-      // console.log("doc:", doc);
+      console.log("doc:", doc);
       this.setState({
         article: doc,
         loading: false,
@@ -61,6 +68,7 @@ class ArticleEdit extends React.Component {
 
   fetchArticleContentById = async (articleId) => {
     let content = [];
+    let content_html='';
     let article;
     let docRef = this.props.firebase.articles().doc(articleId);
 
@@ -84,11 +92,29 @@ class ArticleEdit extends React.Component {
       });
     });
 
+    await docRef.collection("content_html")
+    .get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(doc => {
+        content_html = doc.data();
+      });
+    });
+
     content.sort((a, b) => (a.index > b.index) ? 1 : -1);
 
-    // console.log(content);
-
     this.setState({content:content});
+
+    // console.log(content_html.body);
+    const contentBlock = htmlToDraft(content_html.body ?? "");
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      const content_html = EditorState.createWithContent(contentState);
+      this.setState({
+        content_html,
+      });
+    }
+
+    console.log('state content_html: ', this.state.content_html)
 
     article.content = content;
     return article;
@@ -158,11 +184,11 @@ class ArticleEdit extends React.Component {
     }
 
     e.persist();
-    await this.updateArticleInFirebase(data, this.state.content);
+    await this.updateArticleInFirebase(data, this.state.content, draftToHtml(convertToRaw(this.state.content_html.getCurrentContent())));
   }
 
-  async updateArticleInFirebase(data, content) {
-    console.log("final content:", content);
+  async updateArticleInFirebase(data, content, content_html) {
+    // console.log("final content:", content);
     try {
       let db = this.props.firebase.db;
       let docRef = await db.collection("articles").doc(this.state.articleId).update({
@@ -179,8 +205,16 @@ class ArticleEdit extends React.Component {
         db.collection("articles").doc(this.state.articleId).collection('content').add({...doc});
       });
 
+      await db.collection("articles").doc(this.state.articleId).collection('content_html').get().then(res => {
+        res.forEach(e => {
+          e.ref.delete();
+        });
+      });
+
+      await db.collection("articles").doc(this.state.articleId).collection('content_html').add({body: content_html});
+
       alert("Article Updated!");
-      console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", docRef.id);
     } catch (error) {
       if (error.code === "permission-denied") {
         alert(error.message + " Please sign in first.");
@@ -190,6 +224,11 @@ class ArticleEdit extends React.Component {
     }
   }
 
+  onEditorStateChange: Function = (content_html) => {
+    this.setState({
+      content_html: content_html,
+    });
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -216,7 +255,7 @@ class ArticleEdit extends React.Component {
   }
 
   render() {
-    const { article, loading } = this.state;
+    const { article, loading, content_html } = this.state;
     const numParagraph  = this.state.article.content ? this.state.article.content.length : 0;
     // console.log("numParagraph", numParagraph);
     console.log("this.state.content", this.state.content);
@@ -298,7 +337,7 @@ class ArticleEdit extends React.Component {
                                 </Button>
                                 <ul id="listParagraph" className="paragraph">
                                   {loading ? <div></div> :
-                                      this.state.article.content.map((paragraph, i) =>
+                                      (this.state.article.content.map((paragraph, i) =>
                                               <li key = {paragraph.index}>
                                                 <AvInput
                                                     value={this.state.article.content[i].subtitle}
@@ -326,7 +365,19 @@ class ArticleEdit extends React.Component {
                                                 </div>
                                                 <br/>
                                               </li>
-                                        )
+                                        ),
+                                          content_html ?
+                                          <Editor
+                                              editorState={content_html}
+                                              toolbarClassName="toolbar"
+                                              wrapperClassName="wrapper"
+                                              editorClassName="editor"
+                                              onEditorStateChange={this.onEditorStateChange}
+                                              toolbar={{
+                                                colorPicker: { component: ColorPic },
+                                              }}
+                                          />: null)
+                                      // )
                                   }
                                 </ul>
                               </div>

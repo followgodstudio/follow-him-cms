@@ -56,6 +56,7 @@ import withAuthorization from "../../../components/Session/withAuthorization";
 import {SplitButton} from "react-bootstrap";
 import * as ROUTES from "../../../routes";
 import { withRouter } from "react-router-dom";
+import draftToHtml from 'draftjs-to-html';
 
 class Articles extends React.Component {
   constructor(props){

@@ -152,11 +152,11 @@ class ArticleAdd extends React.Component {
     // console.log(data);
     console.log("content", this.state.content);
     e.persist();
-    await this.addArticleInFirebase(data, this.state.content);
+    await this.addArticleInFirebase(data, this.state.content, draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())));
   }
 
   //
-  async addArticleInFirebase(data, content) {
+  async addArticleInFirebase(data, content, content_html) {
     console.log("state:", this);
     try {
       let db = this.props.firebase.db;
@@ -167,6 +167,11 @@ class ArticleAdd extends React.Component {
       });
       await batch.commit();
       alert("Article Saved!");
+
+      db.collection("articles").doc(docRef.id).collection('content_html').add({body: content_html}).then(function() {
+        alert("Document successfully written!");
+      });
+
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
       if (error.code === "permission-denied") {
@@ -290,11 +295,13 @@ class ArticleAdd extends React.Component {
 
                               <Editor
                                   editorState={editorState}
-                                  toolbarClassName="toolbarClassName"
-                                  wrapperClassName="wrapperClassName"
-                                  editorClassName="editorClassName"
+                                  toolbarClassName="toolbar"
+                                  wrapperClassName="wrapper"
+                                  editorClassName="editor"
                                   onEditorStateChange={this.onEditorStateChange}
-                                  toolbar={{colorPicker: { component: ColorPic },}}
+                                  toolbar={{
+                                    colorPicker: { component: ColorPic },
+                                  }}
                               />
                               {/*<textarea*/}
                               {/*    disabled*/}

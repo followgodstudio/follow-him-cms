@@ -18,6 +18,8 @@ import withAuthorization from "../../../components/Session/withAuthorization";
 import * as ROUTES from "../../../routes";
 import {Image} from "react-bootstrap";
 
+import HTMLRenderer from 'react-html-renderer'
+
 const INITIAL_STATE = {
   inputTitle:"",
   inputDescription:"",
@@ -64,6 +66,7 @@ class ArticleDetail extends React.Component {
 
   fetchArticleContentById = async (articleId) => {
     let content = [];
+    let content_html = [];
     let article;
     let docRef = this.props.firebase.articles().doc(articleId);
 
@@ -72,6 +75,14 @@ class ArticleDetail extends React.Component {
       .then(function(querySnapshot) {
         querySnapshot.forEach(doc => {
           content.push(doc.data());
+        });
+      });
+
+    await docRef.collection("content_html")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(doc => {
+          content_html.push(doc.data());
         });
       });
 
@@ -88,6 +99,7 @@ class ArticleDetail extends React.Component {
     content.sort((a, b) => (a.index > b.index) ? 1 : -1);
 
     article.content = content;
+    article.content_html = content_html;
     return article;
   }
 
@@ -134,7 +146,7 @@ class ArticleDetail extends React.Component {
                         <CardBody>
                           { loading && <div> Loading .. </div>}
                           { !loading &&
-                          <Container>
+                            <Container>
                             {article.image_url ? <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" /> : null}
                             <hr />
                             <div>
@@ -161,6 +173,15 @@ class ArticleDetail extends React.Component {
                                     <hr />
                                   </div>
                               )}
+                              <Container>
+                                {article.content_html ?
+                                    // console.log("content_html", article.content_html)
+                                    article.content_html.map(c =>
+                                    <HTMLRenderer
+                                        html={c.body}
+                                    />)
+                                  : null }
+                              </Container>
                             </div>
                           </Container>}
                         </CardBody>

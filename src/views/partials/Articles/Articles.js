@@ -66,19 +66,57 @@ class Articles extends React.Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    this.fetchArticlesByAuthUser(this.props.authUser).then(docs => {
-      this.setState({
-        articles: docs,
-        loading: false,
-      });
-      // console.log(this.state.articles);
+    this.props.firebase.auth.currentUser.getIdTokenResult()
+    .then((idTokenResult) => {
+      console.log(idTokenResult)
+      // Confirm the user is an Admin.
+      if (!idTokenResult.claims.admin) {
+        this.fetchArticlesByAuthUser(this.props.authUser).then(docs => {
+          this.setState({
+            articles: docs,
+            loading: false,
+          });
+          // console.log(this.state.articles);
+        });
+      } else {
+        this.fetchAllArticles().then(docs => {
+          this.setState({
+            articles: docs,
+            loading: false
+          })
+        })
+
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
+
+
   }
 
   fetchArticlesByAuthUser = async (authUser) => {
     let articleList = [];
     await this.props.firebase.db.collection("articles").where("author_uid",
         "==", authUser.uid).orderBy("created_date", "desc")
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        let article = doc.data();
+        article.id = doc.id;
+        articleList.push(article);
+      });
+      // console.log("articles:   " + articleList);
+    })
+    .catch(function (error) {
+      console.log("Error getting documents: ", error);
+    });
+    return articleList;
+  }
+
+  fetchAllArticles = async e => {
+    let articleList = [];
+    await this.props.firebase.db.collection("articles").orderBy("created_date", "desc")
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {

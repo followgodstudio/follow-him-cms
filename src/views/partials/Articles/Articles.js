@@ -61,7 +61,14 @@ import draftToHtml from 'draftjs-to-html';
 class Articles extends React.Component {
   constructor(props){
     super(props);
-    this.state = { loading: true, articles:[], articlePerPage: 8};
+    this.state = {
+        loading: true,
+        articles:[],
+        articlesPerPage: 8,
+        articles_count: 0,
+        pageCount: 0,
+        currentPage: 1
+        };
   }
 
   componentDidMount() {
@@ -85,8 +92,14 @@ class Articles extends React.Component {
             loading: false
           })
         })
-
       }
+
+      this.fetchTotalPageCount().then(pageCount => {
+        console.log("pageCount:", pageCount)
+        this.setState({
+            pageCount: pageCount
+        })
+      })
     })
     .catch((error) => {
       console.log(error);
@@ -132,27 +145,78 @@ class Articles extends React.Component {
     return articleList;
   }
 
-  fetchArticlesByAuthUserAndPageNum = async (authUser, pageNum) => {
-    let articleList = [];
-    await this.props.firebase.db.collection("articles").where("author_uid",
-        "==", authUser.uid).orderBy("created_date", "desc")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        let article = doc.data();
-        article.id = doc.id;
-        articleList.push(article);
-      });
-      // console.log("articles:   " + articleList);
-    })
-    .catch(function (error) {
-      console.log("Error getting documents: ", error);
+  fetchTotalPageCount = async e => {
+    var docRef = this.props.firebase.db.collection("statistics").doc("articles");
+    let articles_count = 0;
+    await docRef.get().then(function(doc) {
+        if (doc.exists) {
+            articles_count = doc.data()["articles_count"]
+            console.log("Document data:", articles_count);
+        } else {
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
     });
+    console.log(articles_count/this.state.articlesPerPage);
+    return articles_count/this.state.articlesPerPage;
+  }
+
+  fetchArticlesByAuthUserAndPageNum = async (pageNum) => {
+    let articleList = [];
+//    await this.props.firebase.db.collection("articles")
+//        .where("author_uid","==", authUser.uid)
+//        .orderBy("created_date", "desc")
+//        .get()
+//        .then(function (querySnapshot) {
+//          querySnapshot.forEach(function (doc) {
+//            let article = doc.data();
+//            article.id = doc.id;
+//            articleList.push(article);
+//          });
+//          // console.log("articles:   " + articleList);
+//        })
+//        .catch(function (error) {
+//          console.log("Error getting documents: ", error);
+//        });
+//
+//    return articleList;
+
+    let query = this.props.firebase.db.collection("articles")
+                        .where("author_uid", "==", this.props.authUser.uid)
+                        .orderBy("created_date", "desc")
+                        .limit(this.state.articlesPerPage);
+
+    return await query.get().then(function (documentSnapshots) {
+      // Get the last visible document
+//      var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
+//      console.log("last", lastVisible);
+//
+//      // Construct a new query starting at this document,
+//      // get the next 25 cities.
+//      var next = db.collection("articles")
+//                  .where("author_uid",
+//                         "==", authUser.uid)
+//                  .orderBy("created_date", "desc")
+////                  .startAfter(lastVisible)
+//                  .limit(articlesPerPage);
+                  documentSnapshots.forEach(function (doc) {
+                      console.log("documentSnapshots", doc.data())
+                    let article = doc.data();
+                    article.id = doc.id;
+                    articleList.push(article);
+                  });
+                  // console.log("articles:   " + articleList);
+                }
+    );
+
     return articleList;
+
   }
 
   goToDetail(article){
-    this.props.history.push('/admin' + `/article/${article.id}`);
+    alert(`admin/article/${article.id}`)
+    this.props.history.push(`admin/article/${article.id}`);
   }
 
   goToEditDetail(article){
@@ -171,9 +235,48 @@ class Articles extends React.Component {
     });
   }
 
-  render() {
-    const { articles, loading } = this.state;
+    setCurrentPage=(e, pageNumber)=>{
+      console.log("currentPage:", this.state.currentPage)
+      console.log("pageNumber:", pageNumber)
+      this.setState({currentPage: pageNumber});
+      this.fetchArticlesByAuthUserAndPageNum(pageNumber).then(articles => {
+        console.log("loaded", articles)
+      })
 
+      e.preventDefault();
+    }
+
+    nextPage=(last)=>{
+        return this.props.firebase.db.collection("articles")
+                                              .where("author_uid", "==", this.props.authUser.uid)
+                                              .orderBy("created_date", "desc")
+                                              .startAfter(last["created_date"])
+                                              .limit(this.state.articlesPerPage);
+    }
+
+    prevPage=(first)=>{
+        return this.props.firebase.db.collection("articles")
+                                              .where("author_uid", "==", this.props.authUser.uid)
+                                              .orderBy("created_date", "desc")
+                                              .endBefore(first["created_date"])
+                                              .limitToLast(this.state.articlesPerPage);
+    }
+
+  render() {
+    const { articles, loading, pageCount, currentPage } = this.state;
+    let articles_list = [];
+    for ( let number = 1; number <= pageCount; number++){
+        articles_list.push(
+          <PaginationItem className={number === currentPage ? "active" : ""} key={number}>
+            <PaginationLink
+                onClick={(e)=>this.setCurrentPage(e, number)}
+                href="#testing"
+            >
+              {number}
+            </PaginationLink>
+          </PaginationItem>
+        )
+    }
     return (
         <>
           <Header />
@@ -229,30 +332,8 @@ class Articles extends React.Component {
                               <span className="sr-only">Previous</span>
                             </PaginationLink>
                           </PaginationItem>
-                          <PaginationItem className="active">
-                            <PaginationLink
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                              1
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                              2 <span className="sr-only">(current)</span>
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                              3
-                            </PaginationLink>
-                          </PaginationItem>
+                           {articles_list}
+
                           <PaginationItem>
                             <PaginationLink
                                 href="#pablo"

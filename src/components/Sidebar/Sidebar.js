@@ -85,6 +85,7 @@ class Sidebar extends React.Component {
   createLinks = routes => {
     return routes.map((prop, key) => {
       return (
+      !prop.hidden ?
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}
@@ -96,6 +97,7 @@ class Sidebar extends React.Component {
             {prop.name}
           </NavLink>
         </NavItem>
+        : null
       );
     });
   };

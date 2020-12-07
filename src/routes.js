@@ -46,7 +46,7 @@ const routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: ARTICLES,

@@ -76,7 +76,6 @@ class Articles extends React.Component {
             articles: docs,
             loading: false,
           });
-          // console.log(this.state.articles);
         });
       } else {
         this.fetchAllArticles().then(docs => {
@@ -130,6 +129,11 @@ class Articles extends React.Component {
       console.log("Error getting documents: ", error);
     });
     return articleList;
+  }
+
+  fetchAllArticlesCount = async e => {
+    let count = 0;
+    await this.props.firebase.db.collection("articles")
   }
 
   fetchArticlesByAuthUserAndPageNum = async (authUser, pageNum) => {

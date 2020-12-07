@@ -60,21 +60,24 @@ const routes = [
     name: "ArticleDetail",
     icon: "ni ni-album-2 text-green",
     component: ArticleDetail,
-    layout: "/admin"
+    layout: "/admin",
+    hidden: true
   },
   {
     path: ARTICLE_ADD,
     name: "AddArticle",
     icon: "ni ni-tv-2 text-primary",
     component: ArticleAdd,
-    layout: "/admin"
+    layout: "/admin",
+    hidden: true
   },
   {
     path: ARTICLE_EDIT,
     name: "EditArticle",
     icon: "ni ni-tv-2 text-primary",
     component: ArticleEdit,
-    layout: "/admin"
+    layout: "/admin",
+    hidden: true
   },
   {
     path: "/icons",

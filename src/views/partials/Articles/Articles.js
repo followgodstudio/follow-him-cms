@@ -91,20 +91,22 @@ class Articles extends React.Component {
 
   fetchArticlesByAuthUser = async (authUser) => {
     let articleList = [];
-    await this.props.firebase.db.collection("articles").where("author_uid",
-        "==", authUser.uid).orderBy("created_date", "desc")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        let article = doc.data();
-        article.id = doc.id;
-        articleList.push(article);
+    await this.props.firebase.db
+      .collection("articles")
+      .where("author_uid", "==", authUser.uid)
+      .orderBy("created_date", "desc")
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          let article = doc.data();
+          article.id = doc.id;
+          articleList.push(article);
+        });
+        // console.log("articles:   " + articleList);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
       });
-      // console.log("articles:   " + articleList);
-    })
-    .catch(function (error) {
-      console.log("Error getting documents: ", error);
-    });
     return articleList;
   }
 
@@ -167,11 +169,11 @@ class Articles extends React.Component {
     let docRef = this.props.firebase.db.collection("statistics").doc("articles");
     let articles_count = 0;
     await docRef.get().then(function(doc) {
-        if (doc.exists) {
-            articles_count = doc.data()["articles_count"];
-        } else {
-            console.log("No documents!");
-        }
+      if (doc.exists) {
+          articles_count = doc.data()["articles_count"];
+      } else {
+          console.log("No documents!");
+      }
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });

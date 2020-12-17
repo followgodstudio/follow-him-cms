@@ -1,4 +1,3 @@
-// import React, { Component } from 'react';
 import React, { useState, useEffect } from 'react';
 import { withFirebase } from '../../../components/Firebase';
 import Header from "../../../components/Headers/Header";
@@ -33,7 +32,6 @@ const INITIAL_STATE = {
   error: null,
 };
 
-// const ArticleDetail = ({ match }) => {
 class ArticleDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -44,23 +42,16 @@ class ArticleDetail extends React.Component {
       articleId : props.match.params.articleId
     };
   }
-  // const {
-  //   params: { articleId, firebase },
-  // } = match;
-  // const [article, setArticle] = useState(null);
-  // const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(false);
 
 
   componentDidMount() {
+    console.log(this.props)
     this.setState({ loading: true });
     this.fetchArticleContentById(this.state.articleId).then(doc => {
-      // console.log("doc:", doc);
       this.setState({
         article: doc,
         loading: false
       });
-      // console.log("articleResult: ", this.state.article);
     });
   }
 
@@ -126,72 +117,71 @@ class ArticleDetail extends React.Component {
           {/* Page content */}
           <AuthUserContext.Consumer>
             {authUser => (
-                <Container className="mt--7" fluid>
-                  {/* Table */}
-                  <Row>
-                    <div className="col">
-                      <Card className="shadow">
-                        <CardHeader className="border-0">
-                          <Col>
-                            <Row className="d-flex justify-content-center">
-                              <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
-                              <div style={{ marginLeft: "auto" }} >
-                                <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
-                                <Button className="btn-danger" onClick={this.deleteArticle}> Delete </Button>
-                                <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
-                              </div>
-                            </Row>
-                          </Col>
-                        </CardHeader>
-                        <CardBody>
-                          { loading && <div> Loading .. </div>}
-                          { !loading &&
-                            <Container>
-                            {article.image_url ? <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" /> : null}
-                            <hr />
-                            <div>
-                              <h1 className="mb-2">标题：{article.title}</h1>
-                              <br />
-                              <h3 className="mb-2">文章简介：{article.description}</h3>
-                              <Col>
-                              <Row>
-                                <p className="mb-2">作者：
-                                  {article.icon ? <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle /> : null }
-                                  <span style={{marginRight: 20}} />
-                                  {article.author_name}
-                                </p>
-                              </Row>
-                              </Col>
+              <Container className="mt--7" fluid>
+                {/* Table */}
+                <Row>
+                  <div className="col">
+                    <Card className="shadow">
+                      <CardHeader className="border-0">
+                        <Col>
+                          <Row className="d-flex justify-content-center">
+                            <Button className="btn-primary" onClick={e => {e.preventDefault(); this.props.history.goBack();}}> Back </Button>
+                            <div style={{ marginLeft: "auto" }} >
+                              <Button className="btn-primary" onClick={() => this.goToEditDetail(this.state.articleId)}> Edit </Button>
+                              <Button className="btn-danger" onClick={this.deleteArticle}> Delete </Button>
+                              <Button className="btn-success" onClick={e => {e.preventDefault(); this.props.history.push("/admin" + ROUTES.ARTICLE_ADD);}}> +Add article</Button>
                             </div>
+                          </Row>
+                        </Col>
+                      </CardHeader>
+                      <CardBody>
+                        { loading && <div> Loading .. </div>}
+                        { !loading &&
+                          <Container>
+                          {article.image_url ? <img style={{ objectFit: "cover" }} height="400" width="100%" src={article.image_url} alt="Card image cap" /> : null}
+                          <hr />
+                          <div>
+                            <h1 className="mb-2">标题：{article.title}</h1>
                             <br />
-                            <div>
-                              <h3>正文:</h3>
-                              {article.content.map(paragraph =>
-                                  <div key = {paragraph.index}>
-                                    <h4> {paragraph.subtitle} </h4>
-                                    <p> {paragraph.body} </p>
-                                    <hr />
-                                  </div>
-                              )}
-                              <Container>
-                                {article.content_html ?
-                                    // console.log("content_html", article.content_html)
-                                    article.content_html.map(c =>
-                                    <HTMLRenderer
-                                        html={c.body}
-                                    />)
-                                  : null }
-                              </Container>
-                            </div>
-                          </Container>}
-                        </CardBody>
-                        <CardFooter className="py-4">
+                            <h3 className="mb-2">文章简介：{article.description}</h3>
+                            <Col>
+                            <Row>
+                              <p className="mb-2">作者：
+                                {article.icon ? <Image style={{ objectFit: "cover" }} height="25" width="25" src={article.icon} roundedCircle /> : null }
+                                <span style={{marginRight: 20}} />
+                                {article.author_name}
+                              </p>
+                            </Row>
+                            </Col>
+                          </div>
+                          <br />
+                          <div>
+                            <h3>正文:</h3>
+                            {article.content.map(paragraph =>
+                                <div key = {paragraph.index}>
+                                  <h4> {paragraph.subtitle} </h4>
+                                  <p> {paragraph.body} </p>
+                                  <hr />
+                                </div>
+                            )}
+                            <Container>
+                              {article.content_html ?
+                                  article.content_html.map(c =>
+                                  <HTMLRenderer
+                                      html={c.body}
+                                  />)
+                                : null }
+                            </Container>
+                          </div>
+                        </Container>}
+                      </CardBody>
+                      <CardFooter className="py-4">
 
-                        </CardFooter>
-                      </Card>
-                    </div>
-                  </Row>
-                </Container>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                </Row>
+              </Container>
             )}
           </AuthUserContext.Consumer>
         </>
@@ -206,5 +196,3 @@ export default compose(
     withFirebase,
     withAuthorization(condition),
 )(ArticleDetail);
-
-// export default withFirebase(ArticleDetail);

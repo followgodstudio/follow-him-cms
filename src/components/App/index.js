@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
-
 import * as ROUTES from '../../routes';
 import { withAuthentication } from '../Session';
 

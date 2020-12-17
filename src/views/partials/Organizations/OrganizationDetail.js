@@ -14,13 +14,81 @@ import {
   Col
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import {compose} from "recompose";
+import {withRouter} from "react-router-dom";
+import {withFirebase} from "../../../components/Firebase";
+import withAuthorization from "../../../components/Session/withAuthorization";
 
-class Profile extends React.Component {
+class OrganizationDetail extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        loading: true,
+        organization: "",
+        memberships:[],
+      };
+    }
+
+    componentDidMount() {
+      this.setState({ loading: true });
+      console.log(console.log(this.props))
+      this.props.firebase.auth.currentUser.getIdTokenResult()
+      .then((idTokenResult) => {
+        // Confirm the user is an Admin.
+        if (idTokenResult.claims.admin) {
+          this.fetchOrganizationsByAuthUser(this.props.authUser).then(docs => {
+            console.log("orgs:", docs)
+            this.setState({
+              organizations: docs,
+              loading: false,
+            });
+          });
+        }
+        else {
+          this.fetchOrganization(this.org)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      console.log("organizations:", this.state.organizations)
+    }
+
   render() {
     return (
       <>
-        <UserHeader />
+        <div
+          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+          style={{
+            minHeight: "600px",
+            backgroundImage:
+              "url(" + require("assets/img/theme/profile-cover.jpg") + ")",
+            backgroundSize: "cover",
+            backgroundPosition: "center top"
+          }}
+        >
+          {/* Mask */}
+          <span className="mask bg-gradient-default opacity-8" />
+          {/* Header container */}
+          <Container className="d-flex align-items-center" fluid>
+            <Row>
+              <Col lg="7" md="10">
+                <h1 className="display-2 text-white">Organization Detail</h1>
+                <p className="text-white mt-0 mb-5">
+                  This is your profile page. You can see the progress you've
+                  made with your work and manage your projects or assigned tasks
+                </p>
+                <Button
+                  color="info"
+                  href="#pablo"
+                  onClick={e => e.preventDefault()}
+                >
+                  Edit profile
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+        </div>
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -312,4 +380,10 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const condition = authUser => !!authUser;
+
+export default compose(
+    withRouter,
+    withFirebase,
+    withAuthorization(condition),
+)(OrganizationDetail);

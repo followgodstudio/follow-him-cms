@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Index from "views/Index.js";
 import Profile from "views/partials/Profile.js";
 import Maps from "views/partials/Maps.js";
@@ -27,6 +10,9 @@ import PasswordForget from "./views/partials/PasswordForget";
 import ArticleDetail from "./views/partials/Articles/ArticleDetail";
 import ArticleAdd from "./views/partials/Articles/ArticleAdd";
 import ArticleEdit from "./views/partials/Articles/ArticleEdit";
+import Organizations from "./views/partials/Organizations/Organizations";
+import OrganizationDetail from "./views/partials/Organizations/OrganizationDetail";
+import Memberships from "./views/partials/Memberships/Memberships";
 
 export const LANDING = '/';
 export const REGISTER = '/register';
@@ -38,7 +24,9 @@ export const PASSWORDFORGET = '/password-forget';
 export const ARTICLE_DETAIL = '/article/:articleId';
 export const ARTICLE_ADD = '/article-add';
 export const ARTICLE_EDIT = '/article-edit/:articleId';
-
+export const ORGANIZATIONS = '/organizations';
+export const ORGANIZATION_DETAIL = '/organization/:organizationName';
+export const MEMBERSHIPS = '/memberships';
 
 const routes = [
   {
@@ -78,6 +66,28 @@ const routes = [
     component: ArticleEdit,
     layout: "/admin",
     hidden: true
+  },
+  {
+    path: ORGANIZATIONS,
+    name: "Organizations",
+    icon: "ni ni-building text-orange",
+    component: Organizations,
+    layout: "/admin"
+  },
+  {
+    path: ORGANIZATION_DETAIL,
+    name: "OrganizationDetail.js",
+    icon: "ni ni-building text-orange",
+    component: OrganizationDetail,
+    layout: "/admin",
+    hidden: true
+  },
+  {
+    path:  MEMBERSHIPS,
+    name: "Memberships",
+    icon: "ni ni-badge text-cyan",
+    component: Memberships,
+    layout: "/admin"
   },
   {
     path: "/icons",

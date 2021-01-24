@@ -11,7 +11,7 @@ import ArticleDetail from "./views/partials/Articles/ArticleDetail";
 import ArticleAdd from "./views/partials/Articles/ArticleAdd";
 import ArticleEdit from "./views/partials/Articles/ArticleEdit";
 import Organizations from "./views/partials/Organizations/Organizations";
-import OrganizationDetail from "./views/partials/Organizations/OrganizationDetail";
+import OrganizationProfile from "./views/partials/Organizations/OrganizationProfile";
 import Memberships from "./views/partials/Memberships/Memberships";
 
 export const LANDING = '/';
@@ -25,7 +25,7 @@ export const ARTICLE_DETAIL = '/article/:articleId';
 export const ARTICLE_ADD = '/article-add';
 export const ARTICLE_EDIT = '/article-edit/:articleId';
 export const ORGANIZATIONS = '/organizations';
-export const ORGANIZATION_DETAIL = '/organization/:organizationName';
+export const ORGANIZATION_PROFILE = '/organization/:organizationName';
 export const MEMBERSHIPS = '/memberships';
 
 const routes = [
@@ -75,10 +75,10 @@ const routes = [
     layout: "/admin"
   },
   {
-    path: ORGANIZATION_DETAIL,
-    name: "OrganizationDetail.js",
+    path: ORGANIZATION_PROFILE,
+    name: "OrganizationProfile.js",
     icon: "ni ni-building text-orange",
-    component: OrganizationDetail,
+    component: OrganizationProfile,
     layout: "/admin",
     hidden: true
   },

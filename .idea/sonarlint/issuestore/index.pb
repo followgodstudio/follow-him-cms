@@ -37,5 +37,5 @@ a
 -src/views/partials/Memberships/Memberships.js,9/e/9ee7f480e2e361102956b35a8cdcbf3359b34972
 M
 src/views/partials/Profile.js,1/5/154199e082637568178a1c01baea9b59d8c18d40
-f
-6src/views/partials/Organizations/OrganizationDetail.js,5/4/542376450c8e91981a556ab051e5e013b90e7af5
+g
+7src/views/partials/Organizations/OrganizationProfile.js,4/2/423ad0fd5ed7884d7966a61890cdee0cd3c13ead

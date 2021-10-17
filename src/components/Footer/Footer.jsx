@@ -1,8 +1,9 @@
+import { Center } from "@chakra-ui/react";
+import Text from "components/Text/Text";
 import { useLocation } from "react-router-dom";
-import { Text, Center } from "@chakra-ui/react";
 import { Wrapper } from "./Footer.styles";
 
-function Footer() {
+const Footer = () => {
   const location = useLocation();
   const diffFooter = ["/signup", "/signin"];
   if (diffFooter.indexOf(location.pathname) > -1) {
@@ -15,6 +16,6 @@ function Footer() {
       </Center>
     </Wrapper>
   );
-}
+};
 
 export default Footer;

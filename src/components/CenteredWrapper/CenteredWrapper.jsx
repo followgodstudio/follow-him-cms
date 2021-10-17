@@ -7,13 +7,7 @@ import React from "react";
  */
 const CenteredWrapper = ({ children, ...rest }) => {
   return (
-    <Box
-      width="100%"
-      maxWidth="1440px"
-      margin="0 auto"
-      paddingX="40px"
-      {...rest}
-    >
+    <Box width="100%" margin="0 auto" paddingX="40px" {...rest}>
       {children}
     </Box>
   );

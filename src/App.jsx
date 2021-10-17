@@ -1,66 +1,69 @@
-/* eslint-disable react/jsx-no-bind */
-import { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
-import { logIn } from "redux/slices/userSlice";
-import { useDispatch } from "react-redux";
-
 // components
-import Header from "components/Header/Header";
+import { Box, Flex } from "@chakra-ui/react";
 import Footer from "components/Footer/Footer";
+import Header, { withoutHeaderPaths } from "components/Header/Header";
+import NavDrawer from "components/NavDrawer/NavDrawer";
+// routes
 import HomePage from "pages/HomePage/HomePage";
+import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
+import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
 import SignInPage from "pages/shared/SigninPage/SigninPage";
 import SignUpPage from "pages/shared/SignUpPage/SignUpPage";
-import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
-import UserProfilePage from "pages/UserProfilePage/UserProfilePage";
-import Articles from "pages/ArticlesPage/ArticlesPage";
-import OrganizationsPage from "pages/OrganizationsPage/OrganizationsPage";
-import NavDrawer from "components/NavDrawer/NavDrawer";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { logIn } from "redux/slices/userSlice";
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
+  const withHeaderAndNavDrawer = withoutHeaderPaths.every(
+    (path) => path !== pathname
+  );
+
+  const { isDrawerAccordionOn } = useSelector((state) => state.util);
+
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   useEffect(() => {
     dispatch(logIn()).then(() => setIsFetchingUser(false));
   }, [dispatch]);
 
-  const [navSize, setNavSize] = useState("large");
-  function changeNavSize() {
-    if (navSize === "large") {
-      setNavSize("small");
-    } else {
-      setNavSize("large");
-    }
-  }
   return (
     !isFetchingUser && (
       <>
-        <Box ml={navSize === "large" ? "280px" : "130px"}>
-          <Header
-            ml={navSize === "large" ? "300px" : "100px"}
-            navSize={navSize}
-            changeNavSize={changeNavSize}
-          />
-          <main>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/signin" component={SignInPage} />
-              <Route exact path="/signup" component={SignUpPage} />
-              <Route path="/userprofile" component={UserProfilePage} />
-              <Route path="/articles" component={Articles} />
-              <Route
-                path="/organizations"
-                component={OrganizationsPage}
-              />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </main>
-          <Footer />
-        </Box>
-        <NavDrawer navSize={navSize} changeNavSize={changeNavSize} />
+        <Header />
+        <main>
+          <Flex>
+            <NavDrawer />
+            <Box
+              pl={
+                withHeaderAndNavDrawer
+                  ? isDrawerAccordionOn
+                    ? "300px"
+                    : "100px"
+                  : "0"
+              }
+              pt={withHeaderAndNavDrawer ? "120px" : "0"}
+              pr="20px"
+              width="100%"
+            >
+              <Switch>
+                <Route exact path="/signin" component={SignInPage} />
+                <Route exact path="/signup" component={SignUpPage} />
+                <Route exact path="/" component={HomePage} />
+                <Route path="/organizations/view" component={ArticlesPage} />
+                <Route path="/articles/view" component={ArticlesPage} />
+                <Route path="/articles/create" component={ArticlesPage} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Box>
+          </Flex>
+        </main>
+        <Footer />
       </>
     )
   );
-}
+};
 
 export default App;

@@ -1,10 +1,9 @@
 import styled from "@emotion/styled/macro";
-import { Link } from "react-router-dom";
-import { ReactComponent as LogoImg } from "assets/images/US-flag.svg";
 import login from "assets/images/login-bg.jpg";
+import { ReactComponent as LogoImg } from "assets/images/suixing-logo.svg";
+import { Link } from "react-router-dom";
 
 export const HorizontalContainer = styled.div`
-  margin-left: -280px;
   display: flex;
   flex-direction: row;
 `;
@@ -16,7 +15,7 @@ export const ImageBox = styled.div`
   padding: 50px 50px;
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: #fff; //TODO: Replace it with global styling color
   z-index: 1;
   background-image: url(${login});
   background-size: cover;
@@ -28,7 +27,12 @@ export const ImageBox = styled.div`
     width: 100%;
     z-index: -1;
     content: "";
-    background-color: rgba(10, 29, 38, 0.95);
+    background-color: rgba(
+      10,
+      29,
+      38,
+      0.95
+    ); //TODO: Replace it with global styling color
   }
 `;
 

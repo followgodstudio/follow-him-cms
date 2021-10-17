@@ -73,8 +73,8 @@ export const Flex = styled.div`
 
 export const CustomizeButton = styled(Button)`
   width: 440px;
-  background-color: #00CBFE;
-  border: 1px solid #00CBFE;
+  background-color: #00cbfe;
+  border: 1px solid #00cbfe;
   color: white;
   &:hover {
     background-color: #ff4c41;

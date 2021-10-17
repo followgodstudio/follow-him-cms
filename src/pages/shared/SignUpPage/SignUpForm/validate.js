@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import validator from "validator";
 
-function validate(values) {
+const validate = (values) => {
   const errors = {};
 
+  // TODO: Rewrite validator using Regex
   if (!values.firstName) {
     errors.firstName = "Required";
   } else if (values.firstName.length > 35) {
@@ -67,7 +68,7 @@ function validate(values) {
   }
 
   return errors;
-}
+};
 
 validate.propTypes = {
   values: PropTypes.string.isRequired,

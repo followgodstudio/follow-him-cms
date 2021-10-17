@@ -5,23 +5,31 @@ export const signUp = createAsyncThunk("user/signUp", async (userInfo) => {
   // endpoint uses credentials (email/password) if provided.
   // otherwise, uses AUTH_TOKEN.
   // TODO:
-  const response = await axios.post(
-    "http://localhost:3011/registration",
-    userInfo
-  );
+  const response = {
+    data: {
+      id: userInfo.firstName,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      phoneNumber: userInfo.phoneNumber,
+      password: userInfo.password,
+      confirmPassword: userInfo.confirmPassword,
+      keepSignedIn: userInfo.keepSignedIn,
+    },
+  };
   return response.data;
 });
 
 export const logIn = createAsyncThunk(
   "user/logIn",
   async (credentials) => {
-    // endpoint uses credentials (email/password) if provided.
-    // otherwise, uses AUTH_TOKEN.
-    // TODO:
-    const response = await axios.post(
-      "http://localhost:3011/login",
-      credentials
-    );
+    const response = {
+      data: {
+        id: credentials.email,
+        email: credentials.email,
+        password: credentials.password,
+      },
+    };
     return response.data;
   },
   // optional object for more advanced usage

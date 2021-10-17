@@ -1,25 +1,26 @@
-import { useLocation } from "react-router-dom";
-import queryString from "query-string";
-import { Text, Heading, Box, Flex, Image, VStack } from "@chakra-ui/react";
+import { Flex, Image, VStack } from "@chakra-ui/react";
 import {
-  IconCircleX,
   IconBrandFacebook,
-  IconBrandInstagram,
   IconBrandGoogle,
+  IconBrandInstagram,
   IconBrandTwitter,
-  IconBrandYoutube,
+  IconCircleX,
 } from "@tabler/icons";
+import Heading from "components/Heading/Heading";
+import Text from "components/Text/Text";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import SignUpForm from "./SignUpForm/SignUpForm";
 import {
-  ImageBox,
-  HorizontalContainer,
-  VerticalContainer,
-  SuixingLogo,
   CloseLink,
+  HorizontalContainer,
+  ImageBox,
+  MichaelsLogo,
   SocialMediaBox,
+  VerticalContainer,
 } from "./SignUpPage.styles";
 
-function SignUpPage() {
+const SignUpPage = () => {
   const { search } = useLocation();
   const { returnUrl } = queryString.parse(search);
 
@@ -27,12 +28,13 @@ function SignUpPage() {
     <HorizontalContainer>
       <ImageBox>
         <VStack mb="400px">
-          <SuixingLogo />
+          <MichaelsLogo />
         </VStack>
         <VStack>
-          <Heading>Follow Him CMS</Heading>
+          <Heading variant="h2">Rec Dash Platform</Heading>
           <Text fontSize="xs" textAlign="center" pt="20px">
-            This is the CMS for Suixing(Follow Him App)
+            Rec Dash is the single source of truth for Michaels user behavior
+            data and recommendation engine performance
           </Text>
           <SocialMediaBox>
             <button
@@ -72,13 +74,13 @@ function SignUpPage() {
           alignItems="center"
           marginRight="16px"
         >
-          <Heading variant="h5" fontSize="10px" color="black" fontWeight="800">
+          <Text size="small">
             Copyright information goes here C2020. All rights reserved.
-          </Heading>
+          </Text>
         </Flex>
       </VerticalContainer>
     </HorizontalContainer>
   );
-}
+};
 
 export default SignUpPage;

@@ -44,6 +44,11 @@ const colors = {
     1000: "#1B1B1B",
     1100: "#000000",
   },
+  platform: {
+    marketplace: "#6F2597",
+    mik: "#1BA9EA",
+    b2b: "#01058A",
+  },
 };
 
 export default colors;

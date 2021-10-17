@@ -1,18 +1,19 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useHistory } from "react-router-dom";
-import { logOut } from "redux/slices/userSlice";
-import { IconUser, IconLogout } from "@tabler/icons";
 import {
-  Text,
+  Box,
   Popover,
-  PopoverTrigger,
-  PopoverContent,
   PopoverArrow,
   PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
 } from "@chakra-ui/react";
-import { RightNavItem, DropdownItem } from "./LoginHeaderMenu.styles";
+import { IconLogout, IconUser } from "@tabler/icons";
+import Text from "components/Text/Text";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { logOut } from "redux/slices/userSlice";
+import { DropdownItem, RightNavItem } from "./LoginHeaderMenu.styles";
 
-function LoginHeaderMenu() {
+const LoginHeaderMenu = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,7 +26,7 @@ function LoginHeaderMenu() {
             <PopoverTrigger>
               <RightNavItem>
                 <IconUser />
-                <Text size="small" bold marginRight="4px">
+                <Text size="small" bold mr="4px">
                   You
                 </Text>
               </RightNavItem>
@@ -58,16 +59,14 @@ function LoginHeaderMenu() {
             onClick={() => history.push(`/signin?returnUrl=${pathname}`)}
           >
             <IconUser />
-            <div>
-              <Text size="small" bold isTruncated>
-                Sign In
-              </Text>
-            </div>
+            <Box display={{ base: "none", lg: "initial" }}>
+              <Text isTruncated>Sign In</Text>
+            </Box>
           </RightNavItem>
         </>
       )}
     </>
   );
-}
+};
 
 export default LoginHeaderMenu;

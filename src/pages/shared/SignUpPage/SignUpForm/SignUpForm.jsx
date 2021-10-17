@@ -1,27 +1,24 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logIn, signUp } from "redux/slices/userSlice";
-import { Text, Heading, Center } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
+import Button from "components/Button/Button";
+import Checkbox from "components/CheckBox/CheckBox";
+import Heading from "components/Heading/Heading";
+import Text from "components/Text/Text";
 import TextField from "components/TextField/TextField";
 import { useFormik } from "formik";
-import validate from "./validate";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { logIn, signUp } from "redux/slices/userSlice";
 import {
-  HorizontalLine,
+  Footer,
   FormBox,
+  HorizontalLine,
   InputGroup,
   Link,
-  CheckBoxContainer,
-  CheckBoxButton,
-  UncheckedIcon,
-  CheckedIcon,
-  CheckBoxText,
-  Wrapper,
-  Footer,
-  CustomizeButton,
 } from "./SignUpForm.styles";
+import validate from "./validate";
 
-function getFormattedPhoneNumber(phoneNumberInput) {
+const getFormattedPhoneNumber = (phoneNumberInput) => {
   let formattedPhoneNumber = "";
   phoneNumberInput.replace(
     /^\D*(\d{0,3})\D*(\d{0,3})\D*(\d{0,4})/,
@@ -47,9 +44,9 @@ function getFormattedPhoneNumber(phoneNumberInput) {
     }
   );
   return formattedPhoneNumber;
-}
+};
 
-function SignUpForm() {
+const SignUpForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const formId = "sign-up-form";
@@ -66,13 +63,13 @@ function SignUpForm() {
     onSubmit: async (values) => {
       // TODO:
       // eslint-disable-next-line no-alert
-      // alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 2));
       dispatch(signUp(values))
         .then(async () => {
           dispatch(logIn(values))
             .then(() => history.push("/"))
             .catch((e) => {
-              // ToDO:
+              // TODO:
               if (e.response.status === 401) {
                 alert("Please enter a valid email and password.");
               }
@@ -99,9 +96,7 @@ function SignUpForm() {
       minHeight="calc(100vh - 180px)"
       maxWidth="900px"
     >
-      <Heading size="lg" marginBottom="8px">
-        Let’s Start. Tell Us About You.
-      </Heading>
+      <Heading variant="h2">Let’s Start. Tell Us About You.</Heading>
 
       <Text size="medium" lineHeight="24px" mt="12px">
         Need to sign in?&nbsp;
@@ -109,7 +104,7 @@ function SignUpForm() {
       </Text>
       <HorizontalLine />
       <FormBox id={formId} onSubmit={formik.handleSubmit}>
-        <Heading size="lg" marginBottom="24px" mt="24px">
+        <Heading variant="h3" my="24px">
           Tell us about you
         </Heading>
         <InputGroup>
@@ -170,7 +165,7 @@ function SignUpForm() {
           />
         </InputGroup>
         <HorizontalLine />
-        <Heading size="lg" marginBottom="24px" marginTop="24px">
+        <Heading variant="h3" my="24px">
           Create your Password
         </Heading>
 
@@ -204,32 +199,17 @@ function SignUpForm() {
             value={formik.values.confirmPassword}
           />
         </InputGroup>
-        <Wrapper>
-          <CheckBoxContainer marginBottom="0px">
-            <CheckBoxButton
-              id="keepSignedIn"
-              name="keepSignedIn"
-              type="button"
-              onChange={() =>
-                formik.setFieldValue(
-                  "keepSignedIn",
-                  !formik.values.keepSignedIn
-                )
-              }
-              onClick={() =>
-                formik.setFieldValue(
-                  "keepSignedIn",
-                  !formik.values.keepSignedIn
-                )
-              }
-            >
-              {formik.values.keepSignedIn ? <CheckedIcon /> : <UncheckedIcon />}
-            </CheckBoxButton>
-            <CheckBoxText size="small">
-              Keep me signed in. <Link to="/">Details</Link>
-            </CheckBoxText>
-          </CheckBoxContainer>
-        </Wrapper>
+        <Checkbox
+          id="signup-keep-sign-in"
+          name="keepSignIn"
+          onChange={() => {
+            formik.setFieldValue("keepSignedIn", !formik.values.keepSignedIn);
+          }}
+          isChecked={formik.values.keepSignedIn}
+          mt="12px"
+        >
+          Keep me signed in. <Link to="/">Details</Link>
+        </Checkbox>
       </FormBox>
       <Footer>
         <Center
@@ -240,13 +220,13 @@ function SignUpForm() {
           position="relative"
           zIndex={0}
         >
-          <CustomizeButton form={formId} type="submit">
+          <Button form={formId} type="submit" width="440px">
             Sign up
-          </CustomizeButton>
+          </Button>
         </Center>
       </Footer>
     </Center>
   );
-}
+};
 
 export default SignUpForm;

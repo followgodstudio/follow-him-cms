@@ -1,0 +1,64 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": ["prettier"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        // tells eslint where to resolve paths.
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    // we want malformatted code to cause compilation to fail
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    // improves performance & reduces bugs
+    "react/jsx-key": "error",
+    // CRAv4.0 no longer requires importing 'react' to write jsx
+    "react/react-in-jsx-scope": "off",
+    // not obeying this rule creates insidious bugs
+    "react-hooks/exhaustive-deps": "error",
+    // only files that include jsx syntax may use .jsx extension
+    "react/jsx-filename-extension": ["error", { "allow": "as-needed" }],
+    // propTypes must be strict. e.g. arrayOf instead of array
+    "react/forbid-prop-types": "error",
+    // clashes with styled-components "$" convention
+    "react/jsx-pascal-case": "off",
+    // we prefer to use ES6 default properties instead
+    "react/require-default-props": [
+      "error",
+      { "ignoreFunctionalComponents": true }
+    ],
+    // avoids unintended side-effects
+    "no-param-reassign": ["error", { "props": false }],
+    // leads to more legible code
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    // No particular reason. Codebase style choice.
+    "import/prefer-default-export": "off",
+    // rule is overly strict
+    "jsx-a11y/label-has-associated-control": "off",
+    // No particular reason. Codebase style choice.
+    "no-else-return": "off",
+    // "warn" instead of "error" so that app still compiles when debugging
+    "no-unused-vars": "warn",
+    // identifiers from axios calls aren't always in camelcase
+    "camelcase": ["error", { "ignoreDestructuring": true }],
+    // https://stackoverflow.com/questions/37682705/avoid-no-shadow-eslint-error-with-mapdispatchtoprops/42337137#42337137
+    "no-shadow": "off",
+    // allow prop spreading
+    "react/jsx-props-no-spreading": "off",
+    // allow nested ternary 
+    "no-nested-ternary": "off"
+  }
+}

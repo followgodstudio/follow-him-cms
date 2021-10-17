@@ -1,48 +1,99 @@
-import PropTypes from "prop-types";
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
+import {
+  IconAlignJustified,
+  IconArrowRight,
+  IconTallymark1,
+} from "@tabler/icons";
+import CenteredWrapper from "components/CenteredWrapper/CenteredWrapper";
+import theme from "components/CustomTheme";
+import Heading from "components/Heading/Heading";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { IconMenu2, IconChevronLeft } from "@tabler/icons";
+import { switchNavDrawer } from "redux/slices/utilSlice";
+import {
+  LogoLink,
+  MichaelsCircleLogo,
+  SuixingLogo,
+  RightNav,
+} from "./Header.styles";
 import LoginHeaderMenu from "./LoginHeaderMenu/LoginHeaderMenu";
-import HeaderSearchBar from "./HeaderSearchBar/HeaderSearchBar";
+import SearchBar from "./SearchBar/SearchBar";
 
-function Header({ navSize, changeNavSize }) {
-  const withoutHeaderPaths = ["/signin", "/signup"];
+export const withoutHeaderPaths = ["/signin", "/signup"];
 
-  // Chakra-UI disclosure hook for drawers, modals, etc.
+const Header = () => {
+  const dispatch = useDispatch();
+  const { selectedNav, selectedSubNav, isDrawerAccordionOn } = useSelector(
+    (state) => state.util
+  );
+
+  const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg})`);
+
+  useEffect(() => {
+    if (!isDesktop && isDrawerAccordionOn) {
+      dispatch(switchNavDrawer());
+    }
+  }, [dispatch, isDesktop, isDrawerAccordionOn]);
+
   return (
     <Switch>
       <Route path={withoutHeaderPaths} render={() => null} />
       <Route
         render={() => (
-          <Flex
-            paddingY="20px"
+          <CenteredWrapper
+            py="20px"
+            pl="0px"
+            display="flex"
             width="100%"
-            justifyContent="flex-end"
+            flexShrink="0"
+            flexWrap="wrap"
+            justifyContent="space-between"
             alignItems="center"
+            position="fixed"
+            background="gray.0"
+            borderBottom={`1px solid ${theme.colors.gray[200]}`}
             zIndex={1000}
           >
-            {navSize === "small" ? (
-              <IconMenu2 onClick={changeNavSize} cursor="pointer" />
-            ) : (
-              <IconChevronLeft onClick={changeNavSize} cursor="pointer" />
-            )}
-            <Spacer />
-            <Flex>
-              <Flex mr="32px" width="450px">
-                <HeaderSearchBar />
-              </Flex>
-              <Flex mr="72px" ml="32px">
-                <LoginHeaderMenu />{" "}
-              </Flex>
+            <Flex alignItems="center">
+              <LogoLink to="/">
+                {isDrawerAccordionOn ? <SuixingLogo /> : <MichaelsCircleLogo />}
+              </LogoLink>
+              {isDesktop && (
+                <Box cursor="pointer">
+                  {isDrawerAccordionOn ? (
+                    <IconAlignJustified
+                      size="28px"
+                      color="#ff4961"
+                      cursor="pointer"
+                      onClick={() => dispatch(switchNavDrawer())}
+                    />
+                  ) : (
+                    <IconArrowRight
+                      size="28px"
+                      color="#ff4961"
+                      cursor="pointer"
+                      onClick={() => dispatch(switchNavDrawer())}
+                    />
+                  )}
+                </Box>
+              )}
+              <Heading ml="24px" variant="h2">
+                {selectedSubNav || selectedNav}
+              </Heading>
             </Flex>
-          </Flex>
+            <RightNav>
+              {isDesktop && <SearchBar />}
+              {isDesktop && (
+                <IconTallymark1 color={theme.colors.gray[500]} stroke={1} />
+              )}
+              <LoginHeaderMenu />
+            </RightNav>
+          </CenteredWrapper>
         )}
       />
     </Switch>
   );
-}
-Header.propTypes = {
-  navSize: PropTypes.string,
-  changeNavSize: PropTypes.func,
 };
+
 export default Header;

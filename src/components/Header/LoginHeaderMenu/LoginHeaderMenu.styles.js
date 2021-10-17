@@ -1,17 +1,19 @@
 import styled from "@emotion/styled/macro";
-import { Link } from "react-router-dom";
 
-export const RightNavItem = styled.button`
+export const RightNavItem = styled.div`
   display: flex;
   align-items: center;
   text-align: left;
+  :hover {
+    cursor: pointer;
+  }
 
   svg {
     margin-right: 8px;
   }
 
-  > div {
-    max-width: 110px;
+  @media (max-width: 1023px) {
+    margin-right: 10px;
   }
 `;
 

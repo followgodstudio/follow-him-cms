@@ -1,8 +1,4 @@
 import styled from "@emotion/styled/macro";
-import { Button, Text } from "@chakra-ui/react";
-import { Link as SiteLink } from "react-router-dom";
-import { IconSquare, IconSquareCheck } from "@tabler/icons";
-import { ReactComponent as Flag } from "assets/images/US-flag.svg";
 
 export const HorizontalLine = styled.hr`
   color: lightgray;

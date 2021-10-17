@@ -30,7 +30,9 @@ function SigninPage() {
           <SuixingLogo />
         </VStack>
         <VStack>
-          <Heading>Follow Him CMS</Heading>
+          <Heading ml="24px" variant="h2">
+            Follow Him CMS
+          </Heading>
           <Text fontSize="xs" textAlign="center" pt="20px">
             This is the Follow Him CMS
           </Text>

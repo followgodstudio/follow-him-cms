@@ -93,7 +93,6 @@ class ChartTimeline extends React.Component {
             style: {
               colors: "#787878",
               fontSize: "14px",
-              fontFamily: "poppins",
               fontWeight: 400,
               cssClass: "apexcharts-xaxis-label",
             },
@@ -111,7 +110,6 @@ class ChartTimeline extends React.Component {
             style: {
               colors: "#3e4954",
               fontSize: "14px",
-              fontFamily: "Poppins",
               fontWeight: 100,
             },
             formatter: (y) => {

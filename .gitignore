@@ -21,6 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 
 .eslintcache
-.idea
+
+# Ignore IntelliJ files
+.idea/
+
+# Ignore package-lock.json since this project uses yarn.lock
+package-lock.json

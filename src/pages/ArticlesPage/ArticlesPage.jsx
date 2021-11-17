@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { switchNav, switchSubNav } from "redux/slices/utilSlice";
-import { Box, Image, Badge, StarIcon, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Badge,
+  StarIcon,
+  Container,
+  Button,
+  Text,
+  SimpleGrid,
+  Flex,
+  Spacer,
+} from "@chakra-ui/react";
 import DashPage from "./DashPage/DashPage";
 import DetailPage from "./DetailPage/DetailPage";
+import { WarningText } from "./ArticlesPage.styles";
 
 const RealtimeTrafficDash = () => {
   const dispatch = useDispatch();
@@ -58,58 +70,85 @@ const RealtimeTrafficDash = () => {
   };
 
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Image src={property.imageUrl} alt={property.imageAlt} />
-
-      <Box p="6">
-        <Box display="flex" alignItems="baseline">
-          <Badge borderRadius="full" px="2" colorScheme="teal">
-            New
-          </Badge>
-          <Box
-            color="gray.500"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
-          >
-            {property.beds} beds &bull; {property.baths} baths
-          </Box>
-        </Box>
-
-        <Box
-          mt="1"
-          fontWeight="semibold"
-          as="h4"
-          lineHeight="tight"
-          isTruncated
-        >
-          {property.title}
-        </Box>
-
-        <Box>
-          {property.formattedPrice}
-          <Box as="span" color="gray.600" fontSize="sm">
-            / wk
-          </Box>
-        </Box>
-
-        {/* <Box display="flex" mt="2" alignItems="center">
-            {Array(5)
-              .fill("")
-              .map((_, i) => (
-                <Text>Testing</Text>
-                // <StarIcon
-                //   key={i}
-                //   color={i < property.rating ? "teal.500" : "gray.300"}
-                // />
-              ))}
-            <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
-            </Box>
-          </Box> */}
+    <Box w="100%" centerContent>
+      <Box w="100%" p={4} color="white">
+        <Button colorScheme="teal" variant="outline">
+          + Add a new article
+        </Button>
       </Box>
+      <SimpleGrid columns={4} spacing={10}>
+        {Array(20)
+          .fill("")
+          .map((_, item) => (
+            <Box
+              // eslint-disable-next-line react/no-array-index-key
+              key={item}
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
+              <Image src={property.imageUrl} alt={property.imageAlt} />
+              <Box p="6">
+                <Box display="flex" alignItems="baseline">
+                  <Badge borderRadius="full" px="2" colorScheme="teal">
+                    New
+                  </Badge>
+                  <Box
+                    color="gray.500"
+                    fontWeight="semibold"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                    textTransform="uppercase"
+                    ml="2"
+                  >
+                    {property.beds} beds &bull; {property.baths} baths
+                  </Box>
+                </Box>
+                <Text>{item}</Text>
+                <Box
+                  mt="1"
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  isTruncated
+                >
+                  {property.title}
+                </Box>
+                <Box>
+                  {property.formattedPrice}
+                  <Box as="span" color="gray.600" fontSize="sm">
+                    / wk
+                  </Box>
+                </Box>
+
+                {/* <Box display="flex" mt="2" alignItems="center">
+                  {Array(5)
+                    .fill("")
+                    .map((_, i) => (
+                      <Text>Testing</Text>
+                      // <StarIcon
+                      //   key={i}
+                      //   color={i < property.rating ? "teal.500" : "gray.300"}
+                      // />
+                    ))}
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {property.reviewCount} reviews
+                  </Box>
+                </Box> */}
+              </Box>
+              <Flex>
+                <Button p="4" bg="red.400">
+                  <Text>Edit</Text>
+                </Button>
+                <Spacer />
+                <Button p="4" bg="green.400" color="red.400">
+                  <WarningText>Delete</WarningText>
+                </Button>
+              </Flex>
+            </Box>
+          ))}
+      </SimpleGrid>
     </Box>
   );
 };

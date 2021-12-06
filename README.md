@@ -8,5 +8,8 @@ This react app talks directly to the Firebase database to fetch/save data.
 The database is organized into the following entities.
 
 ## Quick start
+To run a development instance, pull the source code and run the following two commands. 
 - npm install
 - npm start
+
+Recommended Environment: MacOS with Node.js and Node Package Management (https://www.npmjs.com/) installed.

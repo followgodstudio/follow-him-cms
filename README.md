@@ -13,3 +13,6 @@ To run a development instance, pull the source code and run the following two co
 - npm start
 
 Recommended Environment: MacOS with Node.js and Node Package Management (https://www.npmjs.com/) installed.
+
+## Test Site
+follow-him-cms.herokuapp.com

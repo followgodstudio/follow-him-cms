@@ -4,6 +4,8 @@ Follow-Him CMS is a react.js based content management system for the Follow-Him 
 ## Architecture
 This react app talks directly to the Firebase database to fetch/save data. 
 
+![Architecture Diagram](https://github.com/followgodstudio/follow-him-cms/blob/main/public/Architecture.png)
+
 ## Database Organization
 The database is organized into the following entities.
 

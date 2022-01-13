@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { switchNav, switchSubNav } from "redux/slices/utilSlice";
 import {
   Box,
@@ -13,6 +13,7 @@ import {
   Flex,
   Spacer,
 } from "@chakra-ui/react";
+import { useFirebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
 import DashPage from "./DashPage/DashPage";
 import DetailPage from "./DetailPage/DetailPage";
 import { WarningText } from "./ArticlesPage.styles";
@@ -23,6 +24,11 @@ const RealtimeTrafficDash = () => {
   const [revenue, setRevenue] = useState({});
 
   const [fullSizeChart, setFullSizeChart] = useState(null);
+  useFirebaseConnect([
+    "articles", // { path: '/todos' } // object notation
+  ]);
+
+  const articles = useSelector((state) => state.firebase.ordered.todos);
 
   useEffect(() => {
     // Switch Header Text
@@ -49,14 +55,6 @@ const RealtimeTrafficDash = () => {
       }
     };
   }, [dispatch]);
-
-  // return fullSizeChart ? (
-  //   <DetailPage setFullSizeChart={setFullSizeChart} />
-  // ) : (
-  //   <DashPage setFullSizeChart={setFullSizeChart} />
-  // );
-
-  // Sample card from Airbnb
 
   const property = {
     imageUrl: "https://bit.ly/2Z4KKcF",

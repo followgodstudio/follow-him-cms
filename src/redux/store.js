@@ -1,4 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import {
+  ReactReduxFirebaseProvider,
+  firebaseReducer,
+} from "react-redux-firebase";
 import userReducer from "./slices/userSlice";
 import utilSlice from "./slices/utilSlice";
 
@@ -7,6 +11,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     util: utilSlice,
+    firebase: firebaseReducer,
   },
 });
 

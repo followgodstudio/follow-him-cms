@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
+  actionTypes,
   ReactReduxFirebaseProvider,
   firebaseReducer,
 } from "react-redux-firebase";
@@ -13,6 +14,12 @@ const store = configureStore({
     util: utilSlice,
     firebase: firebaseReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR],
+      },
+    }),
 });
 
 export default store;

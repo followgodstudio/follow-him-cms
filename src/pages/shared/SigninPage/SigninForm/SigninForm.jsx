@@ -2,6 +2,8 @@ import React from "react";
 import { Heading, Text, Center } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useFirebase } from "react-redux-firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { logIn } from "redux/slices/userSlice";
 import { useFormik } from "formik";
 import TextField from "components/TextField/TextField";
@@ -35,7 +37,46 @@ const validate = (values) => {
 };
 
 function SigninForm() {
+  const auth = getAuth();
+  const gooleAuthProvider = new GoogleAuthProvider();
+  const firebase = useFirebase();
   const history = useHistory();
+
+  const signInWithGooglePopup = () => {
+    signInWithPopup(auth, gooleAuthProvider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const { user } = result;
+        console.log(user);
+        history.push("/articles/view");
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const { email } = error;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
+
+  const signInWithGoogle = () => {
+    firebase
+      .login({
+        provider: "google",
+        type: "popup",
+      })
+      .then(() => {
+        history.push("/articles/view");
+      });
+  };
+
   const dispatch = useDispatch();
   const formId = "sign-in-form";
 
@@ -136,7 +177,14 @@ function SigninForm() {
           position="relative"
           zIndex={0}
         >
-          <CustomizeButton form={formId} type="submit">
+          <CustomizeButton
+            form={formId}
+            type="submit"
+            onClick={(event) => {
+              event.preventDefault();
+              signInWithGooglePopup();
+            }}
+          >
             Sign in
           </CustomizeButton>
           <Text size="medium" lineHeight="24px" mt="24px">

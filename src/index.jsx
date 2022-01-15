@@ -19,14 +19,14 @@ import {
 import App from "./App";
 
 const firebaseConfig = {
-  apiKey: "API_KEY",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://PROJECT_ID.firebaseio.com",
-  projectId: "PROJECT_ID",
-  storageBucket: "PROJECT_ID.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "APP_ID",
-  measurementId: "G-MEASUREMENT_ID",
+  apiKey: "AIzaSyDZyOqJh06FJbNyq8UrYTeeJTN-wauhnk8",
+  authDomain: "walkwithgod-73ee8.firebaseapp.com",
+  databaseURL: "https://walkwithgod-73ee8.firebaseio.com",
+  projectId: "walkwithgod-73ee8",
+  storageBucket: "walkwithgod-73ee8.appspot.com",
+  messagingSenderId: "21802022919",
+  appId: "1:21802022919:web:b4513877a3c83d608092a2",
+  measurementId: "G-TNHG5GNMPQ",
 };
 
 // react-redux-firebase config
@@ -36,12 +36,6 @@ const rrfConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
-if (process.env.NODE_ENV === "development") {
-  window.ENV = {
-    REC_DASH_API: "https://recdash.dev.platform.michaels.com",
-  };
-}
 
 const rrfProps = {
   firebase,

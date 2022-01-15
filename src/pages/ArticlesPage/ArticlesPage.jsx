@@ -13,12 +13,17 @@ import {
   Flex,
   Spacer,
 } from "@chakra-ui/react";
-import { useFirebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
+import {
+  useFirebaseConnect,
+  useFirebase,
+  isLoaded,
+  isEmpty,
+} from "react-redux-firebase";
 import DashPage from "./DashPage/DashPage";
 import DetailPage from "./DetailPage/DetailPage";
 import { WarningText } from "./ArticlesPage.styles";
 
-const RealtimeTrafficDash = () => {
+const ArticlesPage = () => {
   const dispatch = useDispatch();
   const [activeCustomerVisits, setActiveCustomerVisits] = useState({});
   const [revenue, setRevenue] = useState({});
@@ -28,33 +33,33 @@ const RealtimeTrafficDash = () => {
     "articles", // { path: '/todos' } // object notation
   ]);
 
-  const articles = useSelector((state) => state.firebase.ordered.todos);
+  // const articles = useSelector((state) => state.firebase.ordered.todos);
 
-  useEffect(() => {
-    // Switch Header Text
-    dispatch(switchNav("Real Time Dash"));
-    dispatch(switchSubNav("KPI Traffic Dash"));
+  // useEffect(() => {
+  //   // Switch Header Text
+  //   dispatch(switchNav("Real Time Dash"));
+  //   dispatch(switchSubNav("KPI Traffic Dash"));
 
-    const client = new WebSocket("ws://127.0.0.1:8890");
-    client.onmessage = (messageData) => {
-      const messageOjb = JSON.parse(messageData.data);
-      if (messageOjb.api_name === "active_user") {
-        setActiveCustomerVisits({
-          title: messageOjb.api_name,
-          current: messageOjb.data.current,
-          goal: messageOjb.data.goal,
-          percentage: messageOjb.data.percentage,
-        });
-      } else if (messageOjb.api_name === "revenue") {
-        setRevenue({
-          title: messageOjb.api_name,
-          current: messageOjb.data.current,
-          goal: messageOjb.data.goal,
-          percentage: messageOjb.data.percentage,
-        });
-      }
-    };
-  }, [dispatch]);
+  //   const client = new WebSocket("ws://127.0.0.1:8890");
+  //   client.onmessage = (messageData) => {
+  //     const messageOjb = JSON.parse(messageData.data);
+  //     if (messageOjb.api_name === "active_user") {
+  //       setActiveCustomerVisits({
+  //         title: messageOjb.api_name,
+  //         current: messageOjb.data.current,
+  //         goal: messageOjb.data.goal,
+  //         percentage: messageOjb.data.percentage,
+  //       });
+  //     } else if (messageOjb.api_name === "revenue") {
+  //       setRevenue({
+  //         title: messageOjb.api_name,
+  //         current: messageOjb.data.current,
+  //         goal: messageOjb.data.goal,
+  //         percentage: messageOjb.data.percentage,
+  //       });
+  //     }
+  //   };
+  // }, [dispatch]);
 
   const property = {
     imageUrl: "https://bit.ly/2Z4KKcF",
@@ -151,4 +156,4 @@ const RealtimeTrafficDash = () => {
   );
 };
 
-export default RealtimeTrafficDash;
+export default ArticlesPage;

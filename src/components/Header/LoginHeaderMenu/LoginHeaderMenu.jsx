@@ -8,16 +8,24 @@ import {
 } from "@chakra-ui/react";
 import { IconLogout, IconUser } from "@tabler/icons";
 import Text from "components/Text/Text";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { logOut } from "redux/slices/userSlice";
+import { getAuth } from "firebase/auth";
 import { DropdownItem, RightNavItem } from "./LoginHeaderMenu.styles";
 
 const LoginHeaderMenu = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const auth = getAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe(); // unsubscribing from the listener when the component is unmounting.
+  }, [auth]);
+
   return (
     <>
       {isAuthenticated ? (
@@ -27,7 +35,8 @@ const LoginHeaderMenu = () => {
               <RightNavItem>
                 <IconUser />
                 <Text size="small" bold mr="4px">
-                  You
+                  {/* TODO: currentUser.displayName is null, update it using profile? */}
+                  Hello {auth.currentUser.email}
                 </Text>
               </RightNavItem>
             </PopoverTrigger>
@@ -43,7 +52,7 @@ const LoginHeaderMenu = () => {
                 <DropdownItem
                   type="button"
                   onClick={() => {
-                    dispatch(logOut());
+                    auth.signOut();
                   }}
                 >
                   <IconLogout />

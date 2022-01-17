@@ -1,9 +1,15 @@
 import React from "react";
 import { Heading, Text, Center } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useFirebase } from "react-redux-firebase";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  EmailAuthProvider,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import queryString from "query-string";
 import { logIn } from "redux/slices/userSlice";
 import { useFormik } from "formik";
 import TextField from "components/TextField/TextField";
@@ -38,42 +44,23 @@ const validate = (values) => {
 
 function SigninForm() {
   const auth = getAuth();
-  const gooleAuthProvider = new GoogleAuthProvider();
-  const firebase = useFirebase();
   const history = useHistory();
+  const DEFAULT_RETURN_UTL = "/";
+  // TODO: upgrade to react router v6 and use useSearchParams
+  // const { searchParams } = useSearchParams();
+  // searchParams.get("returnUrl", DEFAULT_RETURN_UTL);
+  const { search } = useLocation();
+  const query = queryString.parse(search);
+  const returnUrl = query.returnUrl ?? DEFAULT_RETURN_UTL;
 
-  const signInWithGooglePopup = () => {
-    signInWithPopup(auth, gooleAuthProvider)
+  const signInWithEmail = async (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const { user } = result;
-        console.log(user);
-        history.push("/articles/view");
+        history.push(returnUrl);
         // ...
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const { email } = error;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-  };
-
-  const signInWithGoogle = () => {
-    firebase
-      .login({
-        provider: "google",
-        type: "popup",
-      })
-      .then(() => {
-        history.push("/articles/view");
+        // TODO: handle error
       });
   };
 
@@ -87,7 +74,7 @@ function SigninForm() {
     },
     onSubmit: (values) => {
       dispatch(logIn(values))
-        .then(() => history.push("/"))
+        .then(() => history.push(returnUrl))
         .catch((e) => {
           if (e.response.status === 401) {
             formik.setFieldError(
@@ -99,6 +86,16 @@ function SigninForm() {
     },
     validate,
   });
+
+  const uiConfig = {
+    signInFlow: "popup",
+    signInSuccessUrl: returnUrl,
+    signInOptions: [
+      GoogleAuthProvider.PROVIDER_ID,
+      // TODO: do we implement email signin ourselves?
+      EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
+    ],
+  };
 
   return (
     <Center
@@ -116,6 +113,7 @@ function SigninForm() {
         Sign in by entering information below
       </Heading>
 
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
       <HorizontalLine />
 
       <FormBox id={formId} onSubmit={formik.handleSubmit}>
@@ -182,7 +180,7 @@ function SigninForm() {
             type="submit"
             onClick={(event) => {
               event.preventDefault();
-              signInWithGooglePopup();
+              signInWithEmail(formik.values.email, formik.values.password);
             }}
           >
             Sign in

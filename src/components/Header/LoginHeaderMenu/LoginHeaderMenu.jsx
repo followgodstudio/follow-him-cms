@@ -17,8 +17,9 @@ const LoginHeaderMenu = () => {
   const { pathname } = useLocation();
   const history = useHistory();
   const auth = getAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // TO-DO: make isAuthenticated part of a global context so it can shared across components
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsAuthenticated(!!user);

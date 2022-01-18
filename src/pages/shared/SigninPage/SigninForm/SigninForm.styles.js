@@ -9,7 +9,7 @@ export const HorizontalLine = styled.hr`
 `;
 export const FormBox = styled.form`
   height: auto;
-  margin: 48px 0px;
+  margin: 10px 0px;
 `;
 export const InputGroup = styled.div`
   display: flex;

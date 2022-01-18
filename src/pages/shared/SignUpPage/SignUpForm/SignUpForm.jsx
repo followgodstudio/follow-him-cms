@@ -6,9 +6,9 @@ import Text from "components/Text/Text";
 import TextField from "components/TextField/TextField";
 import { useFormik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logIn, signUp } from "redux/slices/userSlice";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+// import { logIn, signUp } from "redux/slices/userSlice";
 import {
   Footer,
   FormBox,
@@ -48,8 +48,8 @@ const getFormattedPhoneNumber = (phoneNumberInput) => {
 
 const SignUpForm = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const formId = "sign-up-form";
+  const auth = getAuth();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -63,20 +63,14 @@ const SignUpForm = () => {
     onSubmit: async (values) => {
       // TODO:
       // eslint-disable-next-line no-alert
-      alert(JSON.stringify(values, null, 2));
-      dispatch(signUp(values))
-        .then(async () => {
-          dispatch(logIn(values))
-            .then(() => history.push("/"))
-            .catch((e) => {
-              // TODO:
-              if (e.response.status === 401) {
-                alert("Please enter a valid email and password.");
-              }
-            });
+      // alert(JSON.stringify(values, null, 2));
+      createUserWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          // Signed in
+          history.push("/");
         })
         .catch((e) => {
-          if (e.response.status === 409) {
+          if (e.code === "auth/email-already-in-use") {
             formik.setFieldError(
               "email",
               "Email address has already been associated with an account."

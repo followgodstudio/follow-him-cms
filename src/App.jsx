@@ -6,6 +6,7 @@ import NavDrawer from "components/NavDrawer/NavDrawer";
 // routes
 import HomePage from "pages/HomePage/HomePage";
 import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
+import MyEditor from "pages/ArticlesPage/Editor/MyEditor";
 import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
 import SignInPage from "pages/shared/SigninPage/SigninPage";
 import SignUpPage from "pages/shared/SignUpPage/SignUpPage";
@@ -55,7 +56,8 @@ const App = () => {
               <Route exact path="/" component={HomePage} />
               <Route path="/organizations/view" component={ArticlesPage} />
               <Route path="/articles/view" component={ArticlesPage} />
-              <Route path="/articles/create" component={ArticlesPage} />
+              <Route path="/articles/create" component={MyEditor} />
+              <Route path="/articles/edit/:id" component={MyEditor} />
               <Route component={NotFoundPage} />
             </Switch>
           </Box>

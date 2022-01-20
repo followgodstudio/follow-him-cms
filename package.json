@@ -13,6 +13,8 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.0",
     "@testing-library/user-event": "^12.2.2",
+    "@wangeditor/editor": "^0.13.6",
+    "@wangeditor/editor-for-react": "^0.6.19",
     "apexcharts": "^3.22.2",
     "axios": "^0.21.0",
     "d3": "^7.0.3",

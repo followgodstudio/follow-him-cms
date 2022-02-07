@@ -1,6 +1,7 @@
-import styled from "@emotion/styled/macro";
+import { Button } from "@chakra-ui/react";
 import { ReactComponent as Flag } from "assets/images/US-flag.svg";
 import { Link as SiteLink } from "react-router-dom";
+import styled from "@emotion/styled/macro";
 
 export const HorizontalLine = styled.hr`
   color: lightgray; //TODO: Replace it with global styling color
@@ -53,6 +54,12 @@ export const Flex = styled.div`
   }
 `;
 
-export const CloseLink = styled(Link)`
-  height: 24px;
+export const CustomizeButton = styled(Button)`
+  width: 440px;
+  background-color: #00cbfe;
+  border: 1px solid #00cbfe;
+  color: white;
+  &:hover {
+    background-color: #ff4c41;
+  }
 `;

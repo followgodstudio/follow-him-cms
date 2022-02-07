@@ -80,7 +80,3 @@ export const CustomizeButton = styled(Button)`
     background-color: #ff4c41;
   }
 `;
-
-export const CloseLink = styled(Link)`
-  height: 24px;
-`;

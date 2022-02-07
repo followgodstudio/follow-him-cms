@@ -48,13 +48,6 @@ export const MichaelsLogo = styled(LogoImg)`
   width: 200px;
 `;
 
-export const CloseLink = styled(Link)`
-  height: 24px;
-  position: absolute;
-  top: 20%;
-  right: 5%;
-`;
-
 export const SocialMediaBox = styled.div`
   display: flex;
   flex-direction: row;

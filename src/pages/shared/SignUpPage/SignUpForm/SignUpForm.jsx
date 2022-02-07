@@ -1,12 +1,10 @@
 import { Center } from "@chakra-ui/react";
-import Button from "components/Button/Button";
 import Checkbox from "components/CheckBox/CheckBox";
 import Heading from "components/Heading/Heading";
 import Text from "components/Text/Text";
 import TextField from "components/TextField/TextField";
 import { useFormik } from "formik";
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {
   Footer,
@@ -14,6 +12,7 @@ import {
   HorizontalLine,
   InputGroup,
   Link,
+  CustomizeButton,
 } from "./SignUpForm.styles";
 import validate from "./validate";
 
@@ -46,7 +45,6 @@ const getFormattedPhoneNumber = (phoneNumberInput) => {
 };
 
 const SignUpForm = () => {
-  const history = useHistory();
   const formId = "sign-up-form";
   const auth = getAuth();
   const formik = useFormik({
@@ -57,28 +55,20 @@ const SignUpForm = () => {
       phoneNumber: "",
       password: "",
       confirmPassword: "",
-      keepSignedIn: false,
-    },
-    onSubmit: async (values) => {
-      // TODO:
-      // eslint-disable-next-line no-alert
-      // alert(JSON.stringify(values, null, 2));
-      createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
-          // Signed in
-          history.push("/");
-        })
-        .catch((e) => {
-          if (e.code === "auth/email-already-in-use") {
-            formik.setFieldError(
-              "email",
-              "Email address has already been associated with an account."
-            );
-          }
-        });
     },
     validate,
   });
+
+  const createUserWithEmail = async (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password).catch((e) => {
+      if (e.code === "auth/email-already-in-use") {
+        formik.setFieldError(
+          "email",
+          "Email address has already been associated with an account."
+        );
+      }
+    });
+  };
 
   return (
     <Center
@@ -192,17 +182,6 @@ const SignUpForm = () => {
             value={formik.values.confirmPassword}
           />
         </InputGroup>
-        <Checkbox
-          id="signup-keep-sign-in"
-          name="keepSignIn"
-          onChange={() => {
-            formik.setFieldValue("keepSignedIn", !formik.values.keepSignedIn);
-          }}
-          isChecked={formik.values.keepSignedIn}
-          mt="12px"
-        >
-          Keep me signed in.
-        </Checkbox>
       </FormBox>
       <Footer>
         <Center
@@ -213,9 +192,16 @@ const SignUpForm = () => {
           position="relative"
           zIndex={0}
         >
-          <Button form={formId} type="submit" width="440px">
+          <CustomizeButton
+            form={formId}
+            type="submit"
+            onClick={(event) => {
+              event.preventDefault();
+              createUserWithEmail(formik.values.email, formik.values.password);
+            }}
+          >
             Sign up
-          </Button>
+          </CustomizeButton>
         </Center>
       </Footer>
     </Center>

@@ -1,15 +1,11 @@
 import React from "react";
 import { Heading, Text, Center } from "@chakra-ui/react";
-import { useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import {
   GoogleAuthProvider,
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import queryString from "query-string";
-// import { logIn } from "redux/slices/userSlice";
 import { useFormik } from "formik";
 import TextField from "components/TextField/TextField";
 import {
@@ -43,16 +39,6 @@ const validate = (values) => {
 
 function SigninForm() {
   const auth = getAuth();
-  const history = useHistory();
-  const DEFAULT_RETURN_UTL = "/";
-  // TODO: upgrade to react router v6 and use useSearchParams
-  // const { searchParams } = useSearchParams();
-  // searchParams.get("returnUrl", DEFAULT_RETURN_UTL);
-  const { search } = useLocation();
-  const query = queryString.parse(search);
-  const returnUrl = query.returnUrl ?? DEFAULT_RETURN_UTL;
-
-  // const dispatch = useDispatch();
   const formId = "sign-in-form";
 
   const formik = useFormik({
@@ -60,38 +46,17 @@ function SigninForm() {
       email: "",
       password: "",
     },
-    // onSubmit: (values) => {
-    //   dispatch(logIn(values))
-    //     .then(() => history.push(returnUrl))
-    //     .catch((e) => {
-    //       if (e.response.status === 401) {
-    //         formik.setFieldError(
-    //           "email",
-    //           "Please enter a valid email and password."
-    //         );
-    //       }
-    //     });
-    // },
     validate,
   });
 
   const signInWithEmail = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        history.push(returnUrl);
-        // ...
-      })
-      .catch((error) => {
-        formik.setFieldError(
-          "email",
-          "Please enter a valid email and password."
-        );
-      });
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      formik.setFieldError("email", "Please enter a valid email and password.");
+    });
   };
 
   const uiConfig = {
     signInFlow: "popup",
-    signInSuccessUrl: returnUrl,
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID,
       // EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,

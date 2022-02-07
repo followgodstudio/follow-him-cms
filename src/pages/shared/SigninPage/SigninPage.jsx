@@ -1,13 +1,9 @@
-import { useLocation } from "react-router-dom";
-import queryString from "query-string";
-import { Text, Heading, Box, Flex, Image, VStack } from "@chakra-ui/react";
+import { Text, Heading, Flex, Image, VStack } from "@chakra-ui/react";
 import {
-  IconCircleX,
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandGoogle,
   IconBrandTwitter,
-  IconBrandYoutube,
 } from "@tabler/icons";
 import SignInForm from "./SigninForm/SigninForm";
 import {
@@ -15,14 +11,10 @@ import {
   HorizontalContainer,
   VerticalContainer,
   SuixingLogo,
-  CloseLink,
   SocialMediaBox,
 } from "./SigninPage.styles";
 
 function SigninPage() {
-  const { search } = useLocation();
-  const { returnUrl } = queryString.parse(search);
-
   return (
     <HorizontalContainer>
       <ImageBox>
@@ -58,11 +50,6 @@ function SigninPage() {
             src="https://imgs.maker.michaels.com/image/upload/v1609287096/5003241625413951488.png"
             w="100%"
           />
-          <CloseLink
-            to={!returnUrl || returnUrl === "undefined" ? "/" : returnUrl}
-          >
-            <IconCircleX />
-          </CloseLink>
         </Flex>
         <SignInForm />
         <Flex

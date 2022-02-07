@@ -9,12 +9,11 @@ import {
 import { IconLogout, IconUser } from "@tabler/icons";
 import Text from "components/Text/Text";
 import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { DropdownItem, RightNavItem } from "./LoginHeaderMenu.styles";
 
 const LoginHeaderMenu = () => {
-  const { pathname } = useLocation();
   const history = useHistory();
   const auth = getAuth();
 
@@ -65,9 +64,7 @@ const LoginHeaderMenu = () => {
         </>
       ) : (
         <>
-          <RightNavItem
-            onClick={() => history.push(`/signin?returnUrl=${pathname}`)}
-          >
+          <RightNavItem onClick={() => history.push("/signin")}>
             <IconUser />
             <Box display={{ base: "none", lg: "initial" }}>
               <Text isTruncated>Sign In</Text>

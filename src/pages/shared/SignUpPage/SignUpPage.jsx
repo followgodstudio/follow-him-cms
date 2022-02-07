@@ -4,15 +4,11 @@ import {
   IconBrandGoogle,
   IconBrandInstagram,
   IconBrandTwitter,
-  IconCircleX,
 } from "@tabler/icons";
 import Heading from "components/Heading/Heading";
 import Text from "components/Text/Text";
-import queryString from "query-string";
-import { useLocation } from "react-router-dom";
 import SignUpForm from "./SignUpForm/SignUpForm";
 import {
-  CloseLink,
   HorizontalContainer,
   ImageBox,
   MichaelsLogo,
@@ -21,9 +17,6 @@ import {
 } from "./SignUpPage.styles";
 
 const SignUpPage = () => {
-  const { search } = useLocation();
-  const { returnUrl } = queryString.parse(search);
-
   return (
     <HorizontalContainer>
       <ImageBox>
@@ -59,11 +52,6 @@ const SignUpPage = () => {
             w="100%"
             h="130px"
           />
-          <CloseLink
-            to={!returnUrl || returnUrl === "undefined" ? "/" : returnUrl}
-          >
-            <IconCircleX />
-          </CloseLink>
         </Flex>
         <SignUpForm />
         <Flex

@@ -8,7 +8,6 @@ import { useFormik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import { logIn, signUp } from "redux/slices/userSlice";
 import {
   Footer,
   FormBox,
@@ -202,7 +201,7 @@ const SignUpForm = () => {
           isChecked={formik.values.keepSignedIn}
           mt="12px"
         >
-          Keep me signed in. <Link to="/">Details</Link>
+          Keep me signed in.
         </Checkbox>
       </FormBox>
       <Footer>

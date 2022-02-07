@@ -10,10 +10,10 @@ import MyEditor from "pages/ArticlesPage/Editor/MyEditor";
 import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
 import SignInPage from "pages/shared/SigninPage/SigninPage";
 import SignUpPage from "pages/shared/SignUpPage/SignUpPage";
-// import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Route, Switch, useLocation } from "react-router-dom";
-// import { logIn } from "redux/slices/userSlice";
+import { Switch, useLocation } from "react-router-dom";
+import { AuthenticatedRoute, UnauthenticatedRoute } from "utils/Route";
+import { AuthContextProvider } from "./utils/firebase";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -50,16 +50,38 @@ const App = () => {
             pr="20px"
             width="100%"
           >
-            <Switch>
-              <Route exact path="/signin" component={SignInPage} />
-              <Route exact path="/signup" component={SignUpPage} />
-              <Route exact path="/" component={HomePage} />
-              <Route path="/organizations/view" component={ArticlesPage} />
-              <Route path="/articles/view" component={ArticlesPage} />
-              <Route path="/articles/create" component={MyEditor} />
-              <Route path="/articles/edit/:id" component={MyEditor} />
-              <Route component={NotFoundPage} />
-            </Switch>
+            <AuthContextProvider>
+              <Switch>
+                <UnauthenticatedRoute
+                  exact
+                  path="/signin"
+                  component={SignInPage}
+                />
+                <UnauthenticatedRoute
+                  exact
+                  path="/signup"
+                  component={SignUpPage}
+                />
+                <AuthenticatedRoute exact path="/" component={HomePage} />
+                <AuthenticatedRoute
+                  path="/organizations/view"
+                  component={ArticlesPage}
+                />
+                <AuthenticatedRoute
+                  path="/articles/view"
+                  component={ArticlesPage}
+                />
+                <AuthenticatedRoute
+                  path="/articles/create"
+                  component={MyEditor}
+                />
+                <AuthenticatedRoute
+                  path="/articles/edit/:id"
+                  component={MyEditor}
+                />
+                <UnauthenticatedRoute component={NotFoundPage} />
+              </Switch>
+            </AuthContextProvider>
           </Box>
         </Flex>
       </main>

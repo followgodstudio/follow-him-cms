@@ -2,7 +2,9 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Footer from "components/Footer/Footer";
 import Header, { withoutHeaderPaths } from "components/Header/Header";
+import { ReactNotifications } from "react-notifications-component";
 import NavDrawer from "components/NavDrawer/NavDrawer";
+import "react-notifications-component/dist/theme.css";
 // routes
 import HomePage from "pages/HomePage/HomePage";
 import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
@@ -50,7 +52,8 @@ const App = () => {
             pr="20px"
             width="100%"
           >
-            <AuthContextProvider>
+            <AuthContextProvider className="app-container">
+              <ReactNotifications />
               <Switch>
                 <UnauthenticatedRoute
                   exact

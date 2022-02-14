@@ -4,10 +4,12 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithEmailAndPassword,
+  sendEmailVerification,
 } from "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useFormik } from "formik";
 import TextField from "components/TextField/TextField";
+import { NotificationType, sendNotification } from "utils/notification";
 import {
   HorizontalLine,
   FormBox,
@@ -50,9 +52,35 @@ function SigninForm() {
   });
 
   const signInWithEmail = async (email, password) => {
-    signInWithEmailAndPassword(auth, email, password).catch((error) => {
-      formik.setFieldError("email", "Please enter a valid email and password.");
-    });
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const { user } = userCredential;
+        if (!user.emailVerified) {
+          await auth.signOut();
+          sendEmailVerification(user)
+            .then(() => {
+              sendNotification(
+                NotificationType.WARNING,
+                `Email not verified`,
+                `We just sent an email to ${email}. Please click the link to verify then come back to sign in.`
+              );
+            })
+            .catch((error) => {
+              sendNotification(
+                NotificationType.DANGER,
+                "Send Email failed",
+                error.toString()
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        sendNotification(
+          NotificationType.DANGER,
+          `Unknown Error`,
+          error.toString()
+        );
+      });
   };
 
   const uiConfig = {

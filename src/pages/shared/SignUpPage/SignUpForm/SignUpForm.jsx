@@ -1,11 +1,15 @@
 import { Center } from "@chakra-ui/react";
-import Checkbox from "components/CheckBox/CheckBox";
 import Heading from "components/Heading/Heading";
 import Text from "components/Text/Text";
 import TextField from "components/TextField/TextField";
+import { NotificationType, sendNotification } from "utils/notification";
 import { useFormik } from "formik";
 import React from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import {
   Footer,
   FormBox,
@@ -16,34 +20,6 @@ import {
 } from "./SignUpForm.styles";
 import validate from "./validate";
 
-const getFormattedPhoneNumber = (phoneNumberInput) => {
-  let formattedPhoneNumber = "";
-  phoneNumberInput.replace(
-    /^\D*(\d{0,3})\D*(\d{0,3})\D*(\d{0,4})/,
-    function formatPhoneNumber(
-      _match,
-      numberGroup1,
-      numberGroup2,
-      numberGroup3
-    ) {
-      if (numberGroup1.length) {
-        formattedPhoneNumber += numberGroup1;
-
-        if (numberGroup2.length) {
-          formattedPhoneNumber += "-";
-          formattedPhoneNumber += `${numberGroup2}`;
-
-          if (numberGroup3.length) {
-            formattedPhoneNumber += "-";
-            formattedPhoneNumber += numberGroup3;
-          }
-        }
-      }
-    }
-  );
-  return formattedPhoneNumber;
-};
-
 const SignUpForm = () => {
   const formId = "sign-up-form";
   const auth = getAuth();
@@ -52,7 +28,6 @@ const SignUpForm = () => {
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
     },
@@ -60,14 +35,40 @@ const SignUpForm = () => {
   });
 
   const createUserWithEmail = async (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password).catch((e) => {
-      if (e.code === "auth/email-already-in-use") {
-        formik.setFieldError(
-          "email",
-          "Email address has already been associated with an account."
-        );
-      }
-    });
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        await auth.signOut();
+        sendEmailVerification(userCredential.user)
+          .then(() => {
+            sendNotification(
+              NotificationType.SUCCESS,
+              "Sign up succeeded",
+              `We just sent an email to ${email}. Please click the link to verify then come back to sign in.`
+            );
+          })
+          .catch((error) => {
+            sendNotification(
+              NotificationType.DANGER,
+              "Send Email failed",
+              error.toString()
+            );
+          });
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          sendNotification(
+            NotificationType.DANGER,
+            "Email address has already been associated with an account.",
+            "Please go to sign in or forget password."
+          );
+        } else {
+          sendNotification(
+            NotificationType.DANGER,
+            `Unknown Error`,
+            error.toString()
+          );
+        }
+      });
   };
 
   return (
@@ -92,33 +93,6 @@ const SignUpForm = () => {
         </Heading>
         <InputGroup>
           <TextField
-            label="First Name"
-            id="firstName"
-            type="text"
-            errorMessage={
-              formik.touched.firstName && formik.errors.firstName
-                ? formik.errors.firstName
-                : null
-            }
-            handleChange={formik.handleChange}
-            handleBlur={formik.handleBlur}
-            value={formik.values.firstName}
-            marginRight="20px"
-          />
-          <TextField
-            label="Last Name"
-            id="lastName"
-            type="text"
-            errorMessage={
-              formik.touched.lastName && formik.errors.lastName
-                ? formik.errors.lastName
-                : null
-            }
-            handleChange={formik.handleChange}
-            handleBlur={formik.handleBlur}
-            value={formik.values.lastName}
-          />
-          <TextField
             label="Email Address"
             id="email"
             type="text"
@@ -131,20 +105,6 @@ const SignUpForm = () => {
             handleBlur={formik.handleBlur}
             value={formik.values.email}
             marginRight="20px"
-          />
-          <TextField
-            label="Phone Number (optional)"
-            id="phoneNumber"
-            type="text"
-            errorMessage={
-              formik.touched.phoneNumber && formik.errors.phoneNumber
-                ? formik.errors.phoneNumber
-                : null
-            }
-            handleChange={formik.handleChange}
-            handleBlur={formik.handleBlur}
-            value={getFormattedPhoneNumber(formik.values.phoneNumber)}
-            maxLength="12"
           />
         </InputGroup>
         <HorizontalLine />

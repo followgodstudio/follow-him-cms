@@ -11,7 +11,6 @@ export const signUp = createAsyncThunk("user/signUp", async (userInfo) => {
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
       email: userInfo.email,
-      phoneNumber: userInfo.phoneNumber,
       password: userInfo.password,
       confirmPassword: userInfo.confirmPassword,
       keepSignedIn: userInfo.keepSignedIn,

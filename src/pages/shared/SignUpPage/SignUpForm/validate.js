@@ -35,14 +35,6 @@ const validate = (values) => {
     errors.email = "Please specify a valid email address.";
   }
 
-  if (values.phoneNumber.length > 0) {
-    if (values.phoneNumber.length < 12) {
-      errors.phoneNumber = "Please specify a valid phone number.";
-    } else if (!validator.isMobilePhone(values.phoneNumber, ["en-US"])) {
-      errors.phoneNumber = "Phone number is invalid.";
-    }
-  }
-
   if (!values.password) {
     errors.password = "Required";
   } else {

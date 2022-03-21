@@ -17,6 +17,7 @@ import {
   firebaseReducer,
 } from "react-redux-firebase";
 import App from "./App";
+import "./i18n";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZyOqJh06FJbNyq8UrYTeeJTN-wauhnk8",

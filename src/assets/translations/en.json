@@ -1,0 +1,27 @@
+{
+  "common": {
+    "copyRight": "© 2022 Follow Him. All rights reserved."
+  },
+  "signin": {
+    "followHim": "Follow Him CMS",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signin": "Sign In",
+    "signup": "Sign Up",
+    "forgotYourPassword": "Forget password?",
+    "routeToSignUp": "Don't have account? Sign up",
+    "routeToSignIn": "Already have a account? Sign in"
+  },
+  "homepage": {
+    "home": "Home",
+    "createArticles": "Create Articles",
+    "manageArticles": "Manage Articles",
+    "statistics": "Statistics",
+    "manageMembers": "Manage Writers"
+  },
+  "header": {
+    "hello": "Hello",
+    "signOut": "Sign out"
+  }
+}

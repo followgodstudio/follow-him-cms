@@ -1,33 +1,40 @@
-import { IconChartLine, IconHome, IconReportAnalytics } from "@tabler/icons";
+import { useTranslation } from "react-i18next";
+import {
+  IconChartLine,
+  IconFilePlus,
+  IconFiles,
+  IconHome,
+  IconUsers,
+} from "@tabler/icons";
 
-export const NAV_ITEMS = [
-  {
-    title: "Dashboard",
-    link: "/",
-    icon: <IconHome />,
-  },
-  {
-    title: "Articles",
-    icon: <IconChartLine />,
-    subNavList: [
-      {
-        title: "View Articles",
-        link: "/articles/view",
-      },
-      {
-        title: "Create New Article",
-        link: "/articles/create",
-      },
-    ],
-  },
-  {
-    title: "Organizations",
-    icon: <IconReportAnalytics />,
-    subNavList: [
-      {
-        title: "View all members",
-        link: "/organizations/view",
-      },
-    ],
-  },
-];
+export function useNavItems() {
+  const { t } = useTranslation();
+
+  return [
+    {
+      title: t("homepage.home"),
+      icon: <IconHome />,
+      link: "/",
+    },
+    {
+      title: t("homepage.createArticles"),
+      icon: <IconFilePlus />,
+      link: "/articles/create",
+    },
+    {
+      title: t("homepage.manageArticles"),
+      icon: <IconFiles />,
+      link: "/articles/view",
+    },
+    {
+      title: t("homepage.statistics"),
+      icon: <IconChartLine />,
+      link: "/statistics",
+    },
+    {
+      title: t("homepage.manageMembers"),
+      icon: <IconUsers />,
+      link: "/organizations",
+    },
+  ];
+}

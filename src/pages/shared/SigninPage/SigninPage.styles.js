@@ -1,7 +1,6 @@
 import styled from "@emotion/styled/macro";
 import login from "assets/images/login-bg.jpg";
 import { ReactComponent as LogoImg } from "assets/images/suixing-logo.svg";
-import { Link } from "react-router-dom";
 
 export const HorizontalContainer = styled.div`
   display: flex;

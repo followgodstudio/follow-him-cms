@@ -1,10 +1,9 @@
-import { Center } from "@chakra-ui/react";
-import Heading from "components/Heading/Heading";
-import Text from "components/Text/Text";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
+import { Heading, Text, Center } from "@chakra-ui/react";
 import TextField from "components/TextField/TextField";
 import { NotificationType, sendNotification } from "utils/notification";
-import { useFormik } from "formik";
-import React from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -13,20 +12,18 @@ import {
 import {
   Footer,
   FormBox,
-  HorizontalLine,
   InputGroup,
   Link,
   CustomizeButton,
-} from "./SignUpForm.styles";
+} from "../SignInForm/SignInForm.styles";
 import validate from "./validate";
 
 const SignUpForm = () => {
+  const { t } = useTranslation();
   const formId = "sign-up-form";
   const auth = getAuth();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -80,20 +77,13 @@ const SignUpForm = () => {
       minHeight="calc(100vh - 180px)"
       maxWidth="900px"
     >
-      <Heading variant="h2">Let’s Start. Tell Us About You.</Heading>
-
-      <Text size="medium" lineHeight="24px" mt="12px">
-        Need to sign in?&nbsp;
-        <Link to="/signin">Click Here</Link>
-      </Text>
-      <HorizontalLine />
+      <Heading size="xl" marginBottom="8px" color="#00CBFE">
+        {t("signin.followHim")}
+      </Heading>
       <FormBox id={formId} onSubmit={formik.handleSubmit}>
-        <Heading variant="h3" my="24px">
-          Tell us about you
-        </Heading>
         <InputGroup>
           <TextField
-            label="Email Address"
+            label={t("signin.email")}
             id="email"
             type="text"
             errorMessage={
@@ -104,17 +94,9 @@ const SignUpForm = () => {
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
             value={formik.values.email}
-            marginRight="20px"
           />
-        </InputGroup>
-        <HorizontalLine />
-        <Heading variant="h3" my="24px">
-          Create your Password
-        </Heading>
-
-        <InputGroup>
           <TextField
-            label="Password"
+            label={t("signin.password")}
             id="password"
             type="password"
             errorMessage={
@@ -125,11 +107,9 @@ const SignUpForm = () => {
             handleChange={formik.handleChange}
             handleBlur={formik.handleBlur}
             value={formik.values.password}
-            width="439px"
-            marginRight="20px"
           />
           <TextField
-            label="Confirm Password"
+            label={t("signin.confirmPassword")}
             id="confirmPassword"
             type="password"
             errorMessage={
@@ -160,9 +140,12 @@ const SignUpForm = () => {
               createUserWithEmail(formik.values.email, formik.values.password);
             }}
           >
-            Sign up
+            {t("signin.signup")}
           </CustomizeButton>
         </Center>
+        <Text size="medium" lineHeight="24px" mb="24px">
+          <Link to="/signin">{t("signin.routeToSignIn")}</Link>
+        </Text>
       </Footer>
     </Center>
   );

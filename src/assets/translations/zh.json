@@ -1,0 +1,27 @@
+{
+  "common": {
+    "copyRight": "版权所有 © 2022。保留所有权利。"
+  },
+  "signin": {
+    "followHim": "随行派文字管理平台",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "signin": "登陆",
+    "signup": "注册",
+    "forgotYourPassword": "忘记密码？",
+    "routeToSignUp": "还没有账号？点这里注册",
+    "routeToSignIn": "已经有账号？点这里登陆"
+  },
+  "homepage": {
+    "home": "首页",
+    "createArticles": "文章创作",
+    "manageArticles": "文章管理",
+    "statistics": "数据统计",
+    "manageMembers": "人员管理"
+  },
+  "header": {
+    "hello": "你好",
+    "signOut": "退出登录"
+  }
+}

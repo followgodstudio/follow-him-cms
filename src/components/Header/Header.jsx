@@ -17,8 +17,8 @@ import {
   SuixingLogo,
   RightNav,
 } from "./Header.styles";
+import LanguageSelector from "./LanguageSelector/LanguageSelector";
 import LoginHeaderMenu from "./LoginHeaderMenu/LoginHeaderMenu";
-import SearchBar from "./SearchBar/SearchBar";
 
 export const withoutHeaderPaths = ["/signin", "/signup"];
 
@@ -83,7 +83,7 @@ const Header = () => {
               </Heading>
             </Flex>
             <RightNav>
-              {isDesktop && <SearchBar />}
+              <LanguageSelector />
               {isDesktop && (
                 <IconTallymark1 color={theme.colors.gray[500]} stroke={1} />
               )}

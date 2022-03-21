@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { switchNav, switchSubNav } from "redux/slices/utilSlice";
 import { CardBorder } from "./HomePage.styles";
 import "./style.css";
@@ -141,11 +142,12 @@ const RadialChart = loadable(() =>
 // );
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(switchNav("Dashboard"));
+    dispatch(switchNav(t("homepage.home")));
     dispatch(switchSubNav(null));
-  }, [dispatch]);
+  }, [dispatch, t]);
   return (
     <div>
       <div className="row">

@@ -1,20 +1,27 @@
-import { Text, Heading, Flex, Image, VStack } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { Heading, Flex, Image, VStack } from "@chakra-ui/react";
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandGoogle,
   IconBrandTwitter,
 } from "@tabler/icons";
-import SignInForm from "./SigninForm/SigninForm";
+import SignInForm from "./SignInForm/SignInForm";
+import SignUpForm from "./SignUpForm/SignUpForm";
 import {
   ImageBox,
   HorizontalContainer,
   VerticalContainer,
   SuixingLogo,
   SocialMediaBox,
-} from "./SigninPage.styles";
+} from "./SignInPage.styles";
 
 function SigninPage() {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const isSignUp = location.pathname.includes("signup");
+
   return (
     <HorizontalContainer>
       <ImageBox>
@@ -22,12 +29,7 @@ function SigninPage() {
           <SuixingLogo />
         </VStack>
         <VStack>
-          <Heading ml="24px" variant="h2">
-            Follow Him CMS
-          </Heading>
-          <Text fontSize="xs" textAlign="center" pt="20px">
-            This is the Follow Him CMS
-          </Text>
+          <Heading ml="12px">{t("signin.followHim")}</Heading>
           <SocialMediaBox>
             <button
               type="button"
@@ -51,7 +53,7 @@ function SigninPage() {
             w="100%"
           />
         </Flex>
-        <SignInForm />
+        {isSignUp ? <SignUpForm /> : <SignInForm />}
         <Flex
           bg="lightgray"
           w="100%"
@@ -60,8 +62,8 @@ function SigninPage() {
           alignItems="center"
           marginRight="16px"
         >
-          <Heading variant="h5" fontSize="10px" color="black" fontWeight="800">
-            Copyright information goes here C2020. All rights reserved.
+          <Heading variant="h5" fontSize="12px" color="black" fontWeight="800">
+            {t("common.copyRight")}
           </Heading>
         </Flex>
       </VerticalContainer>

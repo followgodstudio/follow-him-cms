@@ -10,12 +10,14 @@ import { IconLogout, IconUser } from "@tabler/icons";
 import Text from "components/Text/Text";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { getAuth } from "firebase/auth";
 import { DropdownItem, RightNavItem } from "./LoginHeaderMenu.styles";
 
 const LoginHeaderMenu = () => {
   const history = useHistory();
   const auth = getAuth();
+  const { t } = useTranslation();
 
   // TO-DO: make isAuthenticated part of a global context so it can shared across components
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,7 +38,7 @@ const LoginHeaderMenu = () => {
                 <IconUser />
                 <Text size="small" bold mr="4px">
                   {/* TODO: currentUser.displayName is null, update it using profile? */}
-                  Hello {auth.currentUser.email}
+                  {t("header.hello")} {auth.currentUser.email}
                 </Text>
               </RightNavItem>
             </PopoverTrigger>
@@ -56,7 +58,7 @@ const LoginHeaderMenu = () => {
                   }}
                 >
                   <IconLogout />
-                  <Text ml="5px">Sign Out</Text>
+                  <Text ml="5px">{t("header.signOut")}</Text>
                 </DropdownItem>
               </PopoverBody>
             </PopoverContent>

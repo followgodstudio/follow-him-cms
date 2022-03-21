@@ -1,47 +1,30 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
 import { Heading, Text, Center } from "@chakra-ui/react";
+import TextField from "components/TextField/TextField";
+import { NotificationType, sendNotification } from "utils/notification";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import {
   GoogleAuthProvider,
+  PhoneAuthProvider,
   getAuth,
   signInWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { useFormik } from "formik";
-import TextField from "components/TextField/TextField";
-import { NotificationType, sendNotification } from "utils/notification";
 import {
-  HorizontalLine,
+  Footer,
   FormBox,
   InputGroup,
   Link,
-  CheckBoxContainer,
-  CheckBoxButton,
-  UncheckedIcon,
-  CheckedIcon,
-  CheckBoxText,
-  Footer,
   CustomizeButton,
-} from "./SigninForm.styles";
-
-const validate = (values) => {
-  const errors = {};
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Please specify a valid email address.";
-  }
-  if (!values.password) {
-    errors.password = "Required";
-  }
-
-  return errors;
-};
+} from "./SignInForm.styles";
+import validate from "./validate";
 
 function SigninForm() {
-  const auth = getAuth();
+  const { t } = useTranslation();
   const formId = "sign-in-form";
+  const auth = getAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -87,7 +70,7 @@ function SigninForm() {
     signInFlow: "popup",
     signInOptions: [
       GoogleAuthProvider.PROVIDER_ID,
-      // EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
+      PhoneAuthProvider.PROVIDER_ID,
     ],
   };
 
@@ -101,19 +84,12 @@ function SigninForm() {
       maxWidth="900px"
     >
       <Heading size="xl" marginBottom="8px" color="#00CBFE">
-        Welcome to Follow Him CMS
+        {t("signin.followHim")}
       </Heading>
-      <Heading size="md" mt="10px">
-        Sign in by entering information below
-      </Heading>
-
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-      <HorizontalLine />
-
       <FormBox id={formId}>
         <InputGroup>
           <TextField
-            label="Email Address"
+            label={t("signin.email")}
             id="email"
             type="text"
             errorMessage={
@@ -126,7 +102,7 @@ function SigninForm() {
             value={formik.values.email}
           />
           <TextField
-            label="Password"
+            label={t("signin.password")}
             id="password"
             type="password"
             errorMessage={
@@ -138,27 +114,9 @@ function SigninForm() {
             handleBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          <Text size="medium" lineHeight="24px" mb="24px">
-            <Link to="/forgot-password">Forgot your password?</Link>
-          </Text>
-          <CheckBoxContainer>
-            <CheckBoxButton
-              id="rememberMe"
-              name="rememberMe"
-              type="button"
-              onChange={() =>
-                formik.setFieldValue("rememberMe", !formik.values.rememberMe)
-              }
-              onClick={() =>
-                formik.setFieldValue("rememberMe", !formik.values.rememberMe)
-              }
-            >
-              {formik.values.rememberMe ? <CheckedIcon /> : <UncheckedIcon />}
-            </CheckBoxButton>
-            <CheckBoxText size="small">Remember Me</CheckBoxText>
-          </CheckBoxContainer>
         </InputGroup>
       </FormBox>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
       <Footer>
         <Center
           display="flex"
@@ -177,12 +135,15 @@ function SigninForm() {
               signInWithEmail(formik.values.email, formik.values.password);
             }}
           >
-            Sign in
+            {t("signin.signin")}
           </CustomizeButton>
-          <Text size="medium" lineHeight="24px" mt="24px">
-            Need to create an account? <Link to="/signup">Sign up Here</Link>
-          </Text>
         </Center>
+        <Text size="medium" lineHeight="24px" mb="24px">
+          <Link to="/forgot-password">{t("signin.forgotYourPassword")}</Link>
+        </Text>
+        <Text size="medium" lineHeight="24px" mt="24px">
+          <Link to="/signup">{t("signin.routeToSignUp")}</Link>
+        </Text>
       </Footer>
     </Center>
   );

@@ -10,8 +10,7 @@ import HomePage from "pages/HomePage/HomePage";
 import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
 import MyEditor from "pages/ArticlesPage/Editor/MyEditor";
 import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
-import SignInPage from "pages/shared/SigninPage/SigninPage";
-import SignUpPage from "pages/shared/SignUpPage/SignUpPage";
+import SignInPage from "pages/shared/SignInPage/SignInPage";
 import { useSelector } from "react-redux";
 import { Switch, useLocation } from "react-router-dom";
 import { AuthenticatedRoute, UnauthenticatedRoute } from "utils/Route";
@@ -63,7 +62,7 @@ const App = () => {
                 <UnauthenticatedRoute
                   exact
                   path="/signup"
-                  component={SignUpPage}
+                  component={SignInPage}
                 />
                 <AuthenticatedRoute exact path="/" component={HomePage} />
                 <AuthenticatedRoute

@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
-import { NAV_ITEMS } from "../constants/NavItems";
+import { useNavItems } from "../constants/NavItems";
 import { NavDrawerPopoverWrapper } from "./NavDrawerPopover.styles";
 import NavDrawerPopoverSection from "./NavDrawerPopoverSection/NavDrawerPopoverSection";
 
 const NavDrawerPopover = () => {
   const { selectedNav } = useSelector((state) => state.util);
+  const navItems = useNavItems();
   return (
     <NavDrawerPopoverWrapper>
-      {NAV_ITEMS.map((navItem) => (
+      {navItems.map((navItem) => (
         <NavDrawerPopoverSection
           key={navItem.title}
           selected={navItem.title === selectedNav}

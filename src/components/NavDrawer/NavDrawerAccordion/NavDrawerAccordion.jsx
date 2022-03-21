@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { NAV_ITEMS } from "../constants/NavItems";
+import { useNavItems } from "../constants/NavItems";
 import { NavDrawerAccordionWrapper } from "./NavDrawerAccordion.styles";
 import NavDrawerAccordionSection from "./NavDrawerAccordionSection/NavDrawerAccordionSection";
 
 const NavDrawerAccordion = () => {
   const { selectedNav } = useSelector((state) => state.util);
+  const navItems = useNavItems();
 
   const [tempSelectedNav, setTempSelectedNav] = useState(null);
   const [expanded, setExpanded] = useState(false);
@@ -17,7 +18,7 @@ const NavDrawerAccordion = () => {
 
   return (
     <NavDrawerAccordionWrapper>
-      {NAV_ITEMS.map((navItem) => (
+      {navItems.map((navItem) => (
         <NavDrawerAccordionSection
           selected={
             navItem.title === selectedNav || navItem.title === tempSelectedNav

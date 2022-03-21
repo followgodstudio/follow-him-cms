@@ -1,16 +1,13 @@
 import styled from "@emotion/styled/macro";
-import { Button, Text } from "@chakra-ui/react";
-import { Link as SiteLink } from "react-router-dom";
-import { IconSquare, IconSquareCheck } from "@tabler/icons";
+import { Button } from "@chakra-ui/react";
 import { ReactComponent as Flag } from "assets/images/US-flag.svg";
+import { Link as SiteLink } from "react-router-dom";
 
-export const HorizontalLine = styled.hr`
-  color: lightgray;
-`;
 export const FormBox = styled.form`
   height: auto;
   margin: 10px 0px;
 `;
+
 export const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,30 +19,6 @@ export const InputGroup = styled.div`
 export const Link = styled(SiteLink)`
   text-decoration: underline;
   color: red;
-`;
-
-export const CheckBoxContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  flex-wrap: wrap;
-  align-items: center;
-  width: 440px;
-`;
-
-export const CheckBoxButton = styled.button`
-  &:focus {
-    box-shadow: 0 0 0 3px white;
-  }
-`;
-export const UncheckedIcon = styled(IconSquare)`
-  color: ${(props) => (props.error ? "red" : "black")};
-`;
-export const CheckedIcon = styled(IconSquareCheck)``;
-
-export const CheckBoxText = styled(Text)`
-  padding-left: 8px;
-  width: 85%;
 `;
 
 export const Footer = styled.div`

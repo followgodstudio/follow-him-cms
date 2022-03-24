@@ -1,6 +1,7 @@
 import styled from "@emotion/styled/macro";
 import login from "assets/images/login-bg.jpg";
 import { ReactComponent as LogoImg } from "assets/images/suixing-logo.svg";
+import LanguageSelector from "components/LanguageSelector/LanguageSelector";
 
 export const HorizontalContainer = styled.div`
   display: flex;
@@ -55,4 +56,10 @@ export const SocialMediaBox = styled.div`
   & > :not(:last-child) {
     margin-right: 20px;
   }
+`;
+
+export const LanguageSelectorBox = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;

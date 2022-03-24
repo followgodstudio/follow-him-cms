@@ -7,6 +7,7 @@ import {
   IconBrandGoogle,
   IconBrandTwitter,
 } from "@tabler/icons";
+import LanguageSelector from "components/LanguageSelector/LanguageSelector";
 import SignInForm from "./SignInForm/SignInForm";
 import SignUpForm from "./SignUpForm/SignUpForm";
 import {
@@ -15,6 +16,7 @@ import {
   VerticalContainer,
   SuixingLogo,
   SocialMediaBox,
+  LanguageSelectorBox,
 } from "./SignInPage.styles";
 
 function SigninPage() {
@@ -52,6 +54,9 @@ function SigninPage() {
             src="https://imgs.maker.michaels.com/image/upload/v1609287096/5003241625413951488.png"
             w="100%"
           />
+          <LanguageSelectorBox>
+            <LanguageSelector />
+          </LanguageSelectorBox>
         </Flex>
         {isSignUp ? <SignUpForm /> : <SignInForm />}
         <Flex

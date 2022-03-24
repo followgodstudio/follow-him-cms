@@ -17,7 +17,7 @@ import {
   SuixingLogo,
   RightNav,
 } from "./Header.styles";
-import LanguageSelector from "./LanguageSelector/LanguageSelector";
+import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import LoginHeaderMenu from "./LoginHeaderMenu/LoginHeaderMenu";
 
 export const withoutHeaderPaths = ["/signin", "/signup"];

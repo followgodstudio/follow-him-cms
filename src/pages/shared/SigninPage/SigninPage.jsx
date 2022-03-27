@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons";
 import LanguageSelector from "components/LanguageSelector/LanguageSelector";
 import SignInForm from "./SigninForm/SigninForm";
-import SignUpForm from "./SignupForm/SignupForm";
+import SignUpForm from "./SignUpForm/SignUpForm";
 import {
   ImageBox,
   HorizontalContainer,

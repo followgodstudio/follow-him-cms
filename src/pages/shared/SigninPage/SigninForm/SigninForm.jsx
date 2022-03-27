@@ -18,7 +18,7 @@ import {
   InputGroup,
   Link,
   CustomizeButton,
-} from "./SignInForm.styles";
+} from "./SigninForm.styles";
 import validate from "./validate";
 
 function SigninForm() {

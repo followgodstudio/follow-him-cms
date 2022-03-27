@@ -15,7 +15,7 @@ import {
   InputGroup,
   Link,
   CustomizeButton,
-} from "../SignInForm/SignInForm.styles";
+} from "../SigninForm/SigninForm.styles";
 import validate from "./validate";
 
 const SignUpForm = () => {

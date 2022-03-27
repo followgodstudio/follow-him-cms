@@ -8,8 +8,8 @@ import {
   IconBrandTwitter,
 } from "@tabler/icons";
 import LanguageSelector from "components/LanguageSelector/LanguageSelector";
-import SignInForm from "./SignInForm/SignInForm";
-import SignUpForm from "./SignUpForm/SignUpForm";
+import SignInForm from "./SigninForm/SigninForm";
+import SignUpForm from "./SignupForm/SignupForm";
 import {
   ImageBox,
   HorizontalContainer,
@@ -17,7 +17,7 @@ import {
   SuixingLogo,
   SocialMediaBox,
   LanguageSelectorBox,
-} from "./SignInPage.styles";
+} from "./SigninPage.styles";
 
 function SigninPage() {
   const { t } = useTranslation();

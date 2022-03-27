@@ -2,6 +2,10 @@
   "name": "rec-web",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "^7.24.0",
+    "node": "^16.0.0"
+  },
   "dependencies": {
     "@chakra-ui/react": "^1.6.6",
     "@chakra-ui/theme-tools": "^1.2.0",

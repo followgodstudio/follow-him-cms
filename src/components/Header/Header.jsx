@@ -20,7 +20,7 @@ import {
 import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import LoginHeaderMenu from "./LoginHeaderMenu/LoginHeaderMenu";
 
-export const withoutHeaderPaths = ["/signin", "/signup"];
+export const withoutHeaderPaths = ["/signin", "/signup", "/forgot-password"];
 
 const Header = () => {
   const dispatch = useDispatch();

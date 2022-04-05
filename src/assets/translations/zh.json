@@ -23,5 +23,12 @@
   "header": {
     "hello": "你好",
     "signOut": "退出登录"
+  },
+  "forgotpassword": {
+    "forgotpassword": "忘记密码？",
+    "email": "邮箱",
+    "submit": "提交",
+    "emailrequired": "必填",
+    "emailinvalid": "请输入有效地址"
   }
 }

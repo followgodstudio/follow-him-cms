@@ -23,5 +23,12 @@
   "header": {
     "hello": "Hello",
     "signOut": "Sign out"
+  },
+  "forgotpassword": {
+    "forgotpassword": "Forgot Password?",
+    "email": "Email",
+    "submit": "Submit",
+    "emailrequired": "Required",
+    "emailinvalid": "Please specify a valid email address"
   }
 }

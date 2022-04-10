@@ -8,6 +8,7 @@ import {
   IconBrandTwitter,
 } from "@tabler/icons";
 import LanguageSelector from "components/LanguageSelector/LanguageSelector";
+import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 import SignInForm from "./SigninForm/SigninForm";
 import SignUpForm from "./SignUpForm/SignUpForm";
 import {
@@ -23,6 +24,7 @@ function SigninPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const isSignUp = location.pathname.includes("signup");
+  const isForgotPassword = location.pathname.includes("forgot-password");
 
   return (
     <HorizontalContainer>
@@ -58,7 +60,9 @@ function SigninPage() {
             <LanguageSelector />
           </LanguageSelectorBox>
         </Flex>
-        {isSignUp ? <SignUpForm /> : <SignInForm />}
+        {isSignUp && <SignUpForm />}
+        {isForgotPassword && <ForgotPasswordForm />}
+        {!isSignUp && !isForgotPassword && <SignInForm />}
         <Flex
           bg="lightgray"
           w="100%"

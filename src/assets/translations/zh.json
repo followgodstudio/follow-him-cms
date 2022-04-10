@@ -1,17 +1,33 @@
 {
   "common": {
-    "copyRight": "版权所有 © 2022。保留所有权利。"
+    "copyRight": "版权所有 © 2022。保留所有权利。",
+    "messages": {
+      "required": "必填",
+      "unknownError": "未知错误"
+    }
   },
   "signin": {
     "followHim": "随行派文字管理平台",
     "email": "邮箱",
     "password": "密码",
     "confirmPassword": "确认密码",
-    "signin": "登陆",
+    "signin": "登录",
     "signup": "注册",
     "forgotYourPassword": "忘记密码？",
     "routeToSignUp": "还没有账号？点这里注册",
-    "routeToSignIn": "已经有账号？点这里登陆"
+    "routeToSignIn": "已经有账号？点这里登录",
+    "resetPassword": "发送邮件重置密码",
+    "goBackToSignIn": "返回登录页面",
+    "messages": {
+      "signUpSucceeded": "成功注册",
+      "emailInUse": "该邮箱已存在账户",
+      "goToSignInOrForgetPassword": "请登录或选择忘记密码。",
+      "emailNotVerified": "邮箱未验证",
+      "emailSent": "已发送链接至邮箱{{email}}，请点击后返回登录。",
+      "sendEmailFailed": "邮件发送失败",
+      "emailinvalid": "请输入有效邮箱",
+      "passwordResetEmailSent": "重置密码邮件已发送"
+    }
   },
   "homepage": {
     "home": "首页",
@@ -23,12 +39,5 @@
   "header": {
     "hello": "你好",
     "signOut": "退出登录"
-  },
-  "forgotpassword": {
-    "forgotpassword": "忘记密码？",
-    "email": "邮箱",
-    "submit": "提交",
-    "emailrequired": "必填",
-    "emailinvalid": "请输入有效地址"
   }
 }

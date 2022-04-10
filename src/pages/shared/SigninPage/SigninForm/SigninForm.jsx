@@ -44,14 +44,14 @@ function SigninForm() {
             .then(() => {
               sendNotification(
                 NotificationType.WARNING,
-                `Email not verified`,
-                `We just sent an email to ${email}. Please click the link to verify then come back to sign in.`
+                t("signin.messages.emailNotVerified"),
+                t("signin.messages.emailSent", { email })
               );
             })
             .catch((error) => {
               sendNotification(
                 NotificationType.DANGER,
-                "Send Email failed",
+                t("signin.messages.sendEmailFailed"),
                 error.toString()
               );
             });
@@ -60,7 +60,7 @@ function SigninForm() {
       .catch((error) => {
         sendNotification(
           NotificationType.DANGER,
-          `Unknown Error`,
+          t("common.messages.unknownError"),
           error.toString()
         );
       });

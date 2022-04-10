@@ -1,6 +1,10 @@
 {
   "common": {
-    "copyRight": "© 2022 Follow Him. All rights reserved."
+    "copyRight": "© 2022 Follow Him. All rights reserved.",
+    "messages": {
+      "required": "Required",
+      "unknownError": "Unknown Error"
+    }
   },
   "signin": {
     "followHim": "Follow Him CMS",
@@ -9,9 +13,21 @@
     "confirmPassword": "Confirm Password",
     "signin": "Sign In",
     "signup": "Sign Up",
-    "forgotYourPassword": "Forget password?",
+    "forgotYourPassword": "Forgot password?",
     "routeToSignUp": "Don't have account? Sign up",
-    "routeToSignIn": "Already have a account? Sign in"
+    "routeToSignIn": "Already have a account? Sign in",
+    "resetPassword": "Send Email to Reset Password",
+    "goBackToSignIn": "Go back to sign in",
+    "messages": {
+      "signUpSucceeded": "Sign Up Succeeded",
+      "emailInUse": "Email Address Is In Use",
+      "goToSignInOrForgetPassword": "Please go to sign in or forgot password.",
+      "emailNotVerified": "Email Not Verified",
+      "emailSent": "We just sent an email to {{email}}. Please click the link to verify then come back to sign in.",
+      "sendEmailFailed": "Send Email Failed",
+      "emailinvalid": "Please specify a valid email address",
+      "passwordResetEmailSent": "Password Reset Email Sent"
+    }
   },
   "homepage": {
     "home": "Home",
@@ -23,12 +39,5 @@
   "header": {
     "hello": "Hello",
     "signOut": "Sign out"
-  },
-  "forgotpassword": {
-    "forgotpassword": "Forgot Password?",
-    "email": "Email",
-    "submit": "Submit",
-    "emailrequired": "Required",
-    "emailinvalid": "Please specify a valid email address"
   }
 }

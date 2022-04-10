@@ -11,7 +11,6 @@ import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
 import MyEditor from "pages/ArticlesPage/Editor/MyEditor";
 import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
 import SignInPage from "pages/shared/SigninPage/SigninPage";
-import ForgotPasswordPage from "pages/shared/ForgotPasswordPage/ForgotPasswordPage";
 import { useSelector } from "react-redux";
 import { Switch, useLocation } from "react-router-dom";
 import { AuthenticatedRoute, UnauthenticatedRoute } from "utils/Route";
@@ -68,7 +67,7 @@ const App = () => {
                 <UnauthenticatedRoute
                   exact
                   path="/forgot-password"
-                  component={ForgotPasswordPage}
+                  component={SignInPage}
                 />
                 <AuthenticatedRoute exact path="/" component={HomePage} />
                 <AuthenticatedRoute

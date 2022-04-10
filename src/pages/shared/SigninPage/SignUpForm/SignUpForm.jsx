@@ -39,14 +39,14 @@ const SignUpForm = () => {
           .then(() => {
             sendNotification(
               NotificationType.SUCCESS,
-              "Sign up succeeded",
-              `We just sent an email to ${email}. Please click the link to verify then come back to sign in.`
+              t("signin.messages.signUpSucceeded"),
+              t("signin.messages.emailSent", { email })
             );
           })
           .catch((error) => {
             sendNotification(
               NotificationType.DANGER,
-              "Send Email failed",
+              t("signin.messages.sendEmailFailed"),
               error.toString()
             );
           });
@@ -55,13 +55,13 @@ const SignUpForm = () => {
         if (error.code === "auth/email-already-in-use") {
           sendNotification(
             NotificationType.DANGER,
-            "Email address has already been associated with an account.",
-            "Please go to sign in or forget password."
+            t("signin.messages.emailInUse"),
+            t("signin.messages.goToSignInOrForgetPassword")
           );
         } else {
           sendNotification(
             NotificationType.DANGER,
-            `Unknown Error`,
+            t("common.messages.unknownError"),
             error.toString()
           );
         }

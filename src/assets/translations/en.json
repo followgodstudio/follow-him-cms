@@ -23,9 +23,12 @@
       "emailInUse": "Email Address Is In Use",
       "goToSignInOrForgetPassword": "Please go to sign in or forgot password.",
       "emailNotVerified": "Email Not Verified",
+      "emailNotValid": "Email Not Valid",
       "emailSent": "We just sent an email to {{email}}. Please click the link to verify then come back to sign in.",
       "sendEmailFailed": "Send Email Failed",
       "emailinvalid": "Please specify a valid email address",
+      "passwordNotValid": "6-14 characters with at least 1: uppercase letter, lowercase letter and number.",
+      "passwordNotMatch": "Please confirm your password.",
       "passwordResetEmailSent": "Password Reset Email Sent"
     }
   },

@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { Heading, Text, Center } from "@chakra-ui/react";
+import validator from "validator";
 import TextField from "components/TextField/TextField";
 import { NotificationType, sendNotification } from "utils/notification";
 import {
@@ -16,12 +17,45 @@ import {
   Link,
   CustomizeButton,
 } from "../SigninForm/SigninForm.styles";
-import validate from "./validate";
 
 const SignUpForm = () => {
   const { t } = useTranslation();
   const formId = "sign-up-form";
   const auth = getAuth();
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = t("common.messages.required");
+    } else if (!validator.isEmail(values.email)) {
+      errors.email = t("signin.messages.emailNotValid");
+    }
+    if (!values.password) {
+      errors.password = t("common.messages.required");
+    } else {
+      const lowerCaseLettersRegexp = /[a-z]/g;
+      const upperCaseLettersRegexp = /[A-Z]/g;
+      const numberRegexp = /[0-9]/g;
+      if (
+        values.password.length < 6 ||
+        values.password.length > 14 ||
+        !lowerCaseLettersRegexp.test(values.password) ||
+        !upperCaseLettersRegexp.test(values.password) ||
+        !numberRegexp.test(values.password)
+      ) {
+        errors.password = t("signin.messages.passwordNotValid");
+      }
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = t("common.messages.required");
+    } else if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = t("signin.messages.passwordNotMatch");
+    }
+
+    return errors;
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",

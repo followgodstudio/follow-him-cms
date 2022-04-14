@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { Heading, Text, Center } from "@chakra-ui/react";
+import validator from "validator";
 import TextField from "components/TextField/TextField";
 import { NotificationType, sendNotification } from "utils/notification";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
@@ -19,12 +20,26 @@ import {
   Link,
   CustomizeButton,
 } from "./SigninForm.styles";
-import validate from "./validate";
 
 function SigninForm() {
   const { t } = useTranslation();
   const formId = "sign-in-form";
   const auth = getAuth();
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = t("common.messages.required");
+    } else if (!validator.isEmail(values.email)) {
+      errors.email = t("signin.messages.emailNotValid");
+    }
+    if (!values.password) {
+      errors.password = t("common.messages.required");
+    }
+
+    return errors;
+  };
 
   const formik = useFormik({
     initialValues: {

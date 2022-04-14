@@ -23,9 +23,12 @@
       "emailInUse": "该邮箱已存在账户",
       "goToSignInOrForgetPassword": "请登录或选择忘记密码。",
       "emailNotVerified": "邮箱未验证",
+      "emailNotValid": "不是一个有效的邮箱",
       "emailSent": "已发送链接至邮箱{{email}}，请点击后返回登录。",
       "sendEmailFailed": "邮件发送失败",
       "emailinvalid": "请输入有效邮箱",
+      "passwordNotValid": "密码必须是6-14位且至少含有一个大写字母，小写字母和数字",
+      "passwordNotMatch": "两次输入的密码不一致",
       "passwordResetEmailSent": "重置密码邮件已发送"
     }
   },

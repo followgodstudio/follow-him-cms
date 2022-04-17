@@ -7,27 +7,24 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import ReactDOM from "react-dom";
 import { Provider as ReduxProvider } from "react-redux";
-import { createStore, combineReducers, compose } from "redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "redux/store";
 import firebase from "firebase/compat/app";
 import "firebase/auth";
-import {
-  ReactReduxFirebaseProvider,
-  firebaseReducer,
-} from "react-redux-firebase";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import App from "./App";
 import "./i18n";
 
+// https://victorbruce82.medium.com/how-to-deploy-a-react-app-to-different-firebase-hosting-environments-dev-and-prod-da3f4cae9a1e
 const firebaseConfig = {
-  apiKey: "AIzaSyDZyOqJh06FJbNyq8UrYTeeJTN-wauhnk8",
-  authDomain: "walkwithgod-73ee8.firebaseapp.com",
-  databaseURL: "https://walkwithgod-73ee8.firebaseio.com",
-  projectId: "walkwithgod-73ee8",
-  storageBucket: "walkwithgod-73ee8.appspot.com",
-  messagingSenderId: "21802022919",
-  appId: "1:21802022919:web:b4513877a3c83d608092a2",
-  measurementId: "G-TNHG5GNMPQ",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // react-redux-firebase config
@@ -36,6 +33,7 @@ const rrfConfig = {
   // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 };
 
+console.log(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 
 const rrfProps = {

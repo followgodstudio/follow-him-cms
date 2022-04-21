@@ -5,14 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm start dev",
-      "name": "npm start dev",
+      "command": "yarn start",
+      "name": "dev",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npm start prod",
-      "name": "npm start prod",
+      "command": "yarn start:prod",
+      "name": "prod",
       "request": "launch",
       "type": "node-terminal"
     }

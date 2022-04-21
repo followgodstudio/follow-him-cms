@@ -33,7 +33,11 @@ function SigninPage() {
           <SuixingLogo />
         </VStack>
         <VStack>
-          <Heading ml="12px">{t("signin.followHim")}</Heading>
+          <Heading ml="12px">
+            {process.env.REACT_APP_ENV === "production"
+              ? t("signin.followHim")
+              : t("signin.followHimDev")}
+          </Heading>
           <SocialMediaBox>
             <button
               type="button"

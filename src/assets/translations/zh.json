@@ -8,6 +8,7 @@
   },
   "signin": {
     "followHim": "随行派文字管理平台",
+    "followHimDev": "随行派文字管理平台(开发)",
     "email": "邮箱",
     "password": "密码",
     "confirmPassword": "确认密码",

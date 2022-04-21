@@ -8,6 +8,7 @@
   },
   "signin": {
     "followHim": "Follow Him CMS",
+    "followHimDev": "Follow Him CMS (Dev)",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",

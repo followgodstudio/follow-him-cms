@@ -1,11 +1,14 @@
-import { useTranslation } from "react-i18next";
 import {
   IconChartLine,
   IconFilePlus,
   IconFiles,
   IconHome,
+  IconMessages,
+  IconStars,
   IconUsers,
 } from "@tabler/icons";
+
+import { useTranslation } from "react-i18next";
 
 export function useNavItems() {
   const { t } = useTranslation();
@@ -32,9 +35,19 @@ export function useNavItems() {
       link: "/statistics",
     },
     {
-      title: t("homepage.manageMembers"),
+      title: t("homepage.manageOrganizations"),
+      icon: <IconStars />,
+      link: "/organizations/view",
+    },
+    {
+      title: t("homepage.manageWriters"),
       icon: <IconUsers />,
-      link: "/organizations",
+      link: "/writers",
+    },
+    {
+      title: t("homepage.messages"),
+      icon: <IconMessages />,
+      link: "/messages",
     },
   ];
 }

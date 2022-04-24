@@ -38,7 +38,9 @@
     "createArticles": "Create Articles",
     "manageArticles": "Manage Articles",
     "statistics": "Statistics",
-    "manageMembers": "Manage Writers"
+    "manageOrganizations": "Manage Organizations",
+    "manageWriters": "Manage Writers",
+    "messages": "Messages"
   },
   "header": {
     "hello": "Hello",

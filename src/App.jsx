@@ -1,20 +1,22 @@
-// components
-import { Box, Flex } from "@chakra-ui/react";
-import Footer from "components/Footer/Footer";
-import Header, { withoutHeaderPaths } from "components/Header/Header";
-import { ReactNotifications } from "react-notifications-component";
-import NavDrawer from "components/NavDrawer/NavDrawer";
 import "react-notifications-component/dist/theme.css";
-// routes
-import HomePage from "pages/HomePage/HomePage";
+
+import { AuthenticatedRoute, UnauthenticatedRoute } from "utils/Route";
+import { Box, Flex } from "@chakra-ui/react";
+import Header, { withoutHeaderPaths } from "components/Header/Header";
+import { Switch, useLocation } from "react-router-dom";
+
 import ArticlesPage from "pages/ArticlesPage/ArticlesPage";
+import { AuthContextProvider } from "./utils/firebase";
+import Footer from "components/Footer/Footer";
+import HomePage from "pages/HomePage/HomePage";
 import MyEditor from "pages/ArticlesPage/Editor/MyEditor";
+import NavDrawer from "components/NavDrawer/NavDrawer";
 import NotFoundPage from "pages/shared/NotFoundPage/NotFoundPage";
+import OrganizationEditPage from "pages/OrganizationsPage/OrganizationEditPage/OrganizationEditPage";
+import OrganizationsPage from "pages/OrganizationsPage/OrganizationsPage";
+import { ReactNotifications } from "react-notifications-component";
 import SignInPage from "pages/shared/SigninPage/SigninPage";
 import { useSelector } from "react-redux";
-import { Switch, useLocation } from "react-router-dom";
-import { AuthenticatedRoute, UnauthenticatedRoute } from "utils/Route";
-import { AuthContextProvider } from "./utils/firebase";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -71,10 +73,6 @@ const App = () => {
                 />
                 <AuthenticatedRoute exact path="/" component={HomePage} />
                 <AuthenticatedRoute
-                  path="/organizations/view"
-                  component={ArticlesPage}
-                />
-                <AuthenticatedRoute
                   path="/articles/view"
                   component={ArticlesPage}
                 />
@@ -85,6 +83,14 @@ const App = () => {
                 <AuthenticatedRoute
                   path="/articles/edit/:id"
                   component={MyEditor}
+                />
+                <AuthenticatedRoute
+                  path="/organizations/view"
+                  component={OrganizationsPage}
+                />
+                <AuthenticatedRoute
+                  path="/organizations/create"
+                  component={OrganizationEditPage}
                 />
                 <UnauthenticatedRoute component={NotFoundPage} />
               </Switch>

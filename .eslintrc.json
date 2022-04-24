@@ -16,6 +16,8 @@
     }
   },
   "rules": {
+    "import/order": "off",
+    "consistent-return": "off",
     // we want malformatted code to cause compilation to fail
     "prettier/prettier": [
       "error",
@@ -58,7 +60,7 @@
     "no-shadow": "off",
     // allow prop spreading
     "react/jsx-props-no-spreading": "off",
-    // allow nested ternary 
+    // allow nested ternary
     "no-nested-ternary": "off"
   }
 }

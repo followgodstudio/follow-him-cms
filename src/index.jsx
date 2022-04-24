@@ -33,7 +33,6 @@ const rrfConfig = {
   // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 };
 
-console.log(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 
 const rrfProps = {

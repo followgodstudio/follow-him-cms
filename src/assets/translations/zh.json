@@ -38,10 +38,26 @@
     "createArticles": "文章创作",
     "manageArticles": "文章管理",
     "statistics": "数据统计",
-    "manageMembers": "人员管理"
+    "manageOrganizations": "品牌管理",
+    "manageWriters": "人员管理",
+    "messages": "消息"
   },
   "header": {
     "hello": "你好",
     "signOut": "退出登录"
+  },
+  "organizations": {
+    "createOrganization": "创建文字品牌",
+    "createOrganizationDescription": "您在“随行派”上发布的任何文字内容，都将以该品牌的名义发出。",
+    "organizationLogo": "品牌LOGO",
+    "organizationLogoDescription": "图片格式可为 png, jpeg等等，500*500 pixels。",
+    "organizationName": "品牌名称",
+    "organizationDescription": "品牌介绍",
+    "createNewOrganization": "创建新文字品牌",
+    "organizationsOwnedByYou": "你创建的品牌",
+    "noOrganizationFound": "你还未创建任何品牌",
+    "messages": {
+      "createOrganizationSucceeded": "成功创建品牌"
+    }
   }
 }

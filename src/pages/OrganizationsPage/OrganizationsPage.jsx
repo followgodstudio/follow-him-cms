@@ -32,7 +32,6 @@ const OrganizationsPage = () => {
         ...doc.data(),
       });
     });
-    console.log(allOrganizations);
     setAllOrganizations(allOrganizations);
   }, [db, auth]);
 
